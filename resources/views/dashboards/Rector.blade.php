@@ -1,47 +1,54 @@
 @extends('layouts.app')
-@section('page-title', 'Dashboard — Rector')
+@section('page-title', 'Rector Dashboard')
 
 @section('content')
 
-<div class="ent-page-header">
-    <div>
-        <h1 class="ent-page-title">Rector Dashboard</h1>
-        <p class="ent-page-sub">Muhtasari wa taasisi — wanafunzi, wahadhiri na mahudhurio</p>
+{{-- Hero --}}
+<div class="dash-hero" style="background:linear-gradient(135deg,#7f1d1d 0%,#b91c1c 45%,#dc2626 70%,#f59e0b 100%)">
+    <div class="dash-hero-eyebrow"><i class='bx bx-crown'></i> Office of the Rector</div>
+    <h1 class="dash-hero-title">Welcome, {{ auth()->user()->name }}</h1>
+    <div class="dash-hero-sub">
+        <span class="dash-hero-chip"><i class='bx bx-calendar'></i> {{ now()->format('l, d M Y') }}</span>
+        <span class="dash-hero-chip"><i class='bx bx-bar-chart-alt-2'></i> Institution Attendance: {{ $attendanceRate }}%</span>
     </div>
-    <div class="ent-page-actions">
-        <a href="{{ route('analytics.dashboard') }}" class="ent-btn ent-btn-outline ent-btn-sm">
-            <i class='bx bx-bar-chart-alt-2'></i> Takwimu
-        </a>
-        <a href="{{ route('management.attendance-report') }}" class="ent-btn ent-btn-primary ent-btn-sm">
-            <i class='bx bx-file-blank'></i> Ripoti ya Mahudhurio
-        </a>
+    <div class="dash-hero-actions">
+        <a href="{{ route('reports.management') }}" class="dash-hero-btn primary"><i class='bx bx-file-blank'></i> System Report</a>
+        <a href="{{ route('departments.index') }}"  class="dash-hero-btn ghost"><i class='bx bx-buildings'></i> Departments</a>
     </div>
 </div>
 
-{{-- Stat cards --}}
+{{-- Stats --}}
 <div class="row g-3 mb-4">
-    <div class="col-sm-6 col-lg-4">
-        <div class="ent-stat">
-            <div class="ent-stat-icon"><i class='bx bx-graduation'></i></div>
-            <div class="ent-stat-value">{{ $totalStudents }}</div>
-            <div class="ent-stat-label">Jumla ya Wanafunzi</div>
+    <div class="col-sm-4">
+        <div class="dash-stat dash-stat-rose">
+            <div class="dash-stat-icon"><i class='bx bx-graduation'></i></div>
+            <div class="dash-stat-value">{{ $totalStudents }}</div>
+            <div class="dash-stat-label">Total Students</div>
+            <div class="dash-stat-footer"><i class='bx bx-group'></i> Institution-wide enrollment</div>
         </div>
     </div>
-    <div class="col-sm-6 col-lg-4">
-        <div class="ent-stat ent-stat-success">
-            <div class="ent-stat-icon"><i class='bx bx-chalkboard'></i></div>
-            <div class="ent-stat-value">{{ $totalLecturers }}</div>
-            <div class="ent-stat-label">Jumla ya Wahadhiri</div>
+    <div class="col-sm-4">
+        <div class="dash-stat dash-stat-amber">
+            <div class="dash-stat-icon"><i class='bx bx-chalkboard'></i></div>
+            <div class="dash-stat-value">{{ $totalLecturers }}</div>
+            <div class="dash-stat-label">Lecturers</div>
+            <div class="dash-stat-footer"><i class='bx bx-user-check'></i> Teaching staff</div>
         </div>
     </div>
-    <div class="col-sm-6 col-lg-4">
-        <div class="ent-stat {{ $attendanceRate >= 75 ? 'ent-stat-success' : 'ent-stat-danger' }}">
-            <div class="ent-stat-icon"><i class='bx bx-user-check'></i></div>
-            <div class="ent-stat-value">{{ $attendanceRate }}%</div>
-            <div class="ent-stat-label">Wastani wa Mahudhurio</div>
-            <div class="ent-stat-trend {{ $attendanceRate >= 75 ? 'up' : 'down' }}">
-                <i class='bx {{ $attendanceRate >= 75 ? "bx-trending-up" : "bx-trending-down" }}'></i>
-                {{ $attendanceRate >= 75 ? 'Inafikia kiwango' : 'Chini ya kiwango' }}
+    <div class="col-sm-4">
+        <div class="dash-stat {{ $attendanceRate >= 75 ? 'dash-stat-green' : 'dash-stat-red' }}">
+            <div class="dash-stat-icon"><i class='bx bx-user-check'></i></div>
+            <div class="dash-stat-value">{{ $attendanceRate }}%</div>
+            <div class="dash-stat-label">Attendance Rate</div>
+            <div class="dash-progress mt-2">
+                <div class="dash-progress-info">
+                    <span>Institution-wide</span>
+                    <span>75% target</span>
+                </div>
+                <div class="dash-progress-track">
+                    <div class="dash-progress-fill {{ $attendanceRate < 75 ? 'danger' : '' }}"
+                         style="width:{{ min($attendanceRate,100) }}%"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -50,37 +57,47 @@
 {{-- Department performance --}}
 <div class="ent-card">
     <div class="ent-card-header">
-        <h2 class="ent-card-title"><i class='bx bx-buildings'></i> Utendaji wa Idara</h2>
-        <span class="ent-badge ent-badge-primary">{{ $departmentPerformance->count() }} idara</span>
+        <h2 class="ent-card-title"><i class='bx bx-buildings'></i> Department Performance</h2>
+        <a href="{{ route('departments.index') }}" class="ent-btn ent-btn-sm ent-btn-ghost">All Departments</a>
     </div>
     <div class="ent-card-body" style="padding:0">
         @if($departmentPerformance->isEmpty())
             <div class="ent-empty">
-                <i class='bx bx-building'></i>
-                <p>Hakuna data ya idara bado.</p>
+                <i class='bx bx-buildings'></i>
+                <p>No department data available yet.</p>
             </div>
         @else
             <table class="ent-table">
                 <thead>
                     <tr>
-                        <th>Jina la Idara</th>
-                        <th>Programu</th>
-                        <th>Wanafunzi</th>
-                        <th>Mahudhurio</th>
+                        <th>#</th>
+                        <th>Department</th>
+                        <th>Programs</th>
+                        <th>Students</th>
+                        <th>Attendance</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($departmentPerformance as $dept)
+                    @foreach($departmentPerformance as $i => $dept)
                         <tr>
+                            <td style="color:var(--ent-text-muted);font-weight:600">{{ $i+1 }}</td>
                             <td style="font-weight:600">{{ $dept->department_name }}</td>
-                            <td style="color:var(--ent-text-muted)">{{ $dept->total_programs }}</td>
+                            <td>
+                                <span class="ent-badge ent-badge-info">{{ $dept->total_programs }} programs</span>
+                            </td>
                             <td style="color:var(--ent-text-muted)">{{ $dept->total_students }}</td>
                             <td>
-                                @if($dept->attendance_rate >= 75)
-                                    <span class="ent-badge ent-badge-success"><i class='bx bx-trending-up'></i> {{ $dept->attendance_rate }}%</span>
-                                @else
-                                    <span class="ent-badge ent-badge-danger"><i class='bx bx-trending-down'></i> {{ $dept->attendance_rate }}%</span>
-                                @endif
+                                <div style="display:flex;align-items:center;gap:.5rem;min-width:120px">
+                                    <div style="flex:1">
+                                        <div class="dash-progress-track">
+                                            <div class="dash-progress-fill {{ $dept->attendance_rate < 75 ? 'danger' : '' }}"
+                                                 style="width:{{ min($dept->attendance_rate,100) }}%"></div>
+                                        </div>
+                                    </div>
+                                    <span class="ent-badge {{ $dept->attendance_rate >= 75 ? 'ent-badge-success' : 'ent-badge-danger' }}">
+                                        {{ $dept->attendance_rate }}%
+                                    </span>
+                                </div>
                             </td>
                         </tr>
                     @endforeach

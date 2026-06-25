@@ -11,6 +11,12 @@
     <noscript><link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet"></noscript>
     @vite(['resources/scss/app.scss', 'resources/js/app.js'])
     @stack('styles')
+    <script>
+        (function () {
+            var t = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', t);
+        })();
+    </script>
 </head>
 
 <body class="ega-app-body">
@@ -41,14 +47,14 @@
     $ac       = fn(...$p) => $isActive(...$p) ? 'active' : '';
 
     $roleLabels = [
-        'student'             => ['label' => 'Mwanafunzi',     'icon' => 'bx-graduation'],
-        'lecturer'            => ['label' => 'Mhadhiri',        'icon' => 'bx-chalkboard'],
-        'hod'                 => ['label' => 'Mkuu wa Idara',   'icon' => 'bx-briefcase-alt-2'],
-        'registrar'           => ['label' => 'Msajili',         'icon' => 'bx-id-card'],
-        'examination_officer' => ['label' => 'Afisa Mitihani',  'icon' => 'bx-check-shield'],
-        'quality_assurance'   => ['label' => 'Ubora (QA)',      'icon' => 'bx-badge-check'],
-        'director_academic'   => ['label' => 'Mkurugenzi',      'icon' => 'bx-building'],
-        'rector'              => ['label' => 'Rector',          'icon' => 'bx-crown'],
+        'student'             => ['label' => 'Student',              'icon' => 'bx-graduation'],
+        'lecturer'            => ['label' => 'Lecturer',             'icon' => 'bx-chalkboard'],
+        'hod'                 => ['label' => 'Head of Department',   'icon' => 'bx-briefcase-alt-2'],
+        'registrar'           => ['label' => 'Registrar',            'icon' => 'bx-id-card'],
+        'examination_officer' => ['label' => 'Examination Officer',  'icon' => 'bx-check-shield'],
+        'quality_assurance'   => ['label' => 'Quality Assurance',    'icon' => 'bx-badge-check'],
+        'director_academic'   => ['label' => 'Director Academic',    'icon' => 'bx-building'],
+        'rector'              => ['label' => 'Rector',               'icon' => 'bx-crown'],
     ];
     $ri = $roleLabels[$roleName] ?? ['label' => ucfirst($roleName), 'icon' => 'bx-user'];
 @endphp
@@ -88,7 +94,7 @@
 
         {{-- ████████ HOD ████████████████████████████████████████████████████ --}}
         @if ($isHod)
-            <li><div class="ega-nav-section">Muhtasari</div></li>
+            <li><div class="ega-nav-section">Overview</div></li>
             <li>
                 <a href="{{ route('hoddashboard') }}" class="ega-nav-link {{ $ac('hoddashboard') }}">
                     <i class='bx bx-tachometer'></i><span>Dashboard</span>
@@ -96,86 +102,86 @@
             </li>
             <li>
                 <a href="{{ route('analytics.dashboard') }}" class="ega-nav-link {{ $ac('analytics.dashboard') }}">
-                    <i class='bx bx-bar-chart-alt-2'></i><span>Takwimu</span>
+                    <i class='bx bx-bar-chart-alt-2'></i><span>Statistics</span>
                 </a>
             </li>
 
-            <li><div class="ega-nav-section">Ripoti</div></li>
+            <li><div class="ega-nav-section">Reports</div></li>
             <li>
                 <details class="ega-nav-group {{ $hodReportOpen ? 'is-open' : '' }}" @if($hodReportOpen) open @endif>
                     <summary>
                         <div class="ega-nav-group-toggle">
-                            <i class='bx bx-file-blank'></i><span>Ripoti</span>
+                            <i class='bx bx-file-blank'></i><span>Reports</span>
                             <i class='bx bx-chevron-down ega-caret ms-auto'></i>
                         </div>
                     </summary>
                     <div class="ega-nav-sub">
                         <a href="{{ route('hodreport') }}" class="ega-nav-sub-link {{ $ac('hodreport') }}">
-                            <i class='bx bx-list-ul'></i> Moduli za Wahadhiri
+                            <i class='bx bx-list-ul'></i> Lecturer Modules
                         </a>
                         <a href="{{ route('hod.analysis') }}" class="ega-nav-sub-link {{ $ac('hod.analysis') }}">
-                            <i class='bx bx-line-chart'></i> Uchambuzi
+                            <i class='bx bx-line-chart'></i> Analysis
                         </a>
                     </div>
                 </details>
             </li>
 
-            <li><div class="ega-nav-section">Moduli</div></li>
+            <li><div class="ega-nav-section">Modules</div></li>
             <li>
                 <details class="ega-nav-group {{ $hodModuleOpen ? 'is-open' : '' }}" @if($hodModuleOpen) open @endif>
                     <summary>
                         <div class="ega-nav-group-toggle">
-                            <i class='bx bx-book-open'></i><span>Ugawaji wa Moduli</span>
+                            <i class='bx bx-book-open'></i><span>Module Distribution</span>
                             <i class='bx bx-chevron-down ega-caret ms-auto'></i>
                         </div>
                     </summary>
                     <div class="ega-nav-sub">
                         <a href="{{ route('moduledistribute.create') }}" class="ega-nav-sub-link {{ $ac('moduledistribute.create') }}">
-                            <i class='bx bx-plus-circle'></i> Gawa Moduli
+                            <i class='bx bx-plus-circle'></i> Assign Module
                         </a>
                         <a href="{{ route('moduledistribute.index') }}" class="ega-nav-sub-link {{ $ac('moduledistribute.index') }}">
-                            <i class='bx bx-git-branch'></i> Mgawanyo
+                            <i class='bx bx-git-branch'></i> Distribution
                         </a>
                     </div>
                 </details>
             </li>
 
-            <li><div class="ega-nav-section">Usimamizi wa Data</div></li>
+            <li><div class="ega-nav-section">Data Management</div></li>
             <li>
                 <details class="ega-nav-group {{ $hodDataOpen ? 'is-open' : '' }}" @if($hodDataOpen) open @endif>
                     <summary>
                         <div class="ega-nav-group-toggle">
-                            <i class='bx bx-data'></i><span>Uingizaji Data</span>
+                            <i class='bx bx-data'></i><span>Data Entry</span>
                             <i class='bx bx-chevron-down ega-caret ms-auto'></i>
                         </div>
                     </summary>
                     <div class="ega-nav-sub">
                         <a href="{{ route('students.index') }}"      class="ega-nav-sub-link {{ $ac('students.*') }}">
-                            <i class='bx bx-graduation'></i> Wanafunzi
+                            <i class='bx bx-graduation'></i> Students
                         </a>
                         <a href="{{ route('hod.users.index') }}"     class="ega-nav-sub-link {{ $ac('hod.users.*') }}">
-                            <i class='bx bx-group'></i> Watumiaji
+                            <i class='bx bx-group'></i> Users
                         </a>
                         <a href="{{ route('programs.index') }}"      class="ega-nav-sub-link {{ $ac('programs.*') }}">
-                            <i class='bx bx-bookmark'></i> Programu
+                            <i class='bx bx-bookmark'></i> Programs
                         </a>
                         <a href="{{ route('modules.index') }}"       class="ega-nav-sub-link {{ $ac('modules.*') }}">
-                            <i class='bx bx-book'></i> Moduli
+                            <i class='bx bx-book'></i> Modules
                         </a>
                         <a href="{{ route('lecturers.index') }}"     class="ega-nav-sub-link {{ $ac('lecturers.*') }}">
-                            <i class='bx bx-chalkboard'></i> Wahadhiri
+                            <i class='bx bx-chalkboard'></i> Lecturers
                         </a>
                         <a href="{{ route('roles.index') }}"         class="ega-nav-sub-link {{ $ac('roles.*') }}">
-                            <i class='bx bx-shield'></i> Majukumu
+                            <i class='bx bx-shield'></i> Roles
                         </a>
                         <a href="{{ route('weeks.index') }}"         class="ega-nav-sub-link {{ $ac('weeks.*') }}">
-                            <i class='bx bx-calendar-week'></i> Wiki
+                            <i class='bx bx-calendar-week'></i> Weeks
                         </a>
                         <a href="{{ route('class-timings.index') }}" class="ega-nav-sub-link {{ $ac('class-timings.*') }}">
-                            <i class='bx bx-time'></i> Muda wa Darasa
+                            <i class='bx bx-time'></i> Class Timings
                         </a>
                         <a href="{{ route('role-permissions.index') }}" class="ega-nav-sub-link {{ $ac('role-permissions.*') }}">
-                            <i class='bx bx-lock-open-alt'></i> Ruhusa
+                            <i class='bx bx-lock-open-alt'></i> Permissions
                         </a>
                     </div>
                 </details>
@@ -184,57 +190,57 @@
 
         {{-- ████████ LECTURER ███████████████████████████████████████████████ --}}
         @if ($isLecturer)
-            <li><div class="ega-nav-section">Muhtasari</div></li>
+            <li><div class="ega-nav-section">Overview</div></li>
             <li>
                 <a href="{{ route('lecturerdashboard') }}" class="ega-nav-link {{ $ac('lecturerdashboard') }}">
                     <i class='bx bx-tachometer'></i><span>Dashboard</span>
                 </a>
             </li>
 
-            <li><div class="ega-nav-section">Ufundishaji</div></li>
+            <li><div class="ega-nav-section">Teaching</div></li>
             <li>
                 <details class="ega-nav-group {{ $lecTeachOpen ? 'is-open' : '' }}" @if($lecTeachOpen) open @endif>
                     <summary>
                         <div class="ega-nav-group-toggle">
-                            <i class='bx bx-chalkboard'></i><span>Ufundishaji & Mahudhurio</span>
+                            <i class='bx bx-chalkboard'></i><span>Teaching & Attendance</span>
                             <i class='bx bx-chevron-down ega-caret ms-auto'></i>
                         </div>
                     </summary>
                     <div class="ega-nav-sub">
                         <a href="{{ route('lecturerreport') }}"         class="ega-nav-sub-link {{ $ac('lecturerreport') }}">
-                            <i class='bx bx-book-open'></i> Moduli Zangu
+                            <i class='bx bx-book-open'></i> My Modules
                         </a>
                         <a href="{{ route('lecturerclasstiming') }}"    class="ega-nav-sub-link {{ $ac('lecturerclasstiming') }}">
-                            <i class='bx bx-calendar-check'></i> Ratiba ya Madarasa
+                            <i class='bx bx-calendar-check'></i> Class Timetable
                         </a>
                         <a href="{{ route('lecturerclasses') }}"        class="ega-nav-sub-link {{ $ac('lecturerclasses') }}">
-                            <i class='bx bx-door-open'></i> Madarasa
+                            <i class='bx bx-door-open'></i> Classes
                         </a>
                         <a href="{{ route('students.index') }}"         class="ega-nav-sub-link {{ $ac('students.*') }}">
-                            <i class='bx bx-graduation'></i> Wanafunzi
+                            <i class='bx bx-graduation'></i> Students
                         </a>
                         <a href="{{ route('attendanceindex') }}"        class="ega-nav-sub-link {{ $ac('attendanceindex') }}">
-                            <i class='bx bx-user-check'></i> Mahudhurio ya Mkono
+                            <i class='bx bx-user-check'></i> Manual Attendance
                         </a>
                         <a href="{{ route('attendance.records.index') }}" class="ega-nav-sub-link {{ $ac('attendance.records.*') }}">
-                            <i class='bx bx-spreadsheet'></i> Rekodi za Mahudhurio
+                            <i class='bx bx-spreadsheet'></i> Attendance Records
                         </a>
                     </div>
                 </details>
             </li>
 
-            <li><div class="ega-nav-section">Uchambuzi & Vifaa</div></li>
+            <li><div class="ega-nav-section">Analysis & Devices</div></li>
             <li>
                 <details class="ega-nav-group {{ $lecAnalysisOpen ? 'is-open' : '' }}" @if($lecAnalysisOpen) open @endif>
                     <summary>
                         <div class="ega-nav-group-toggle">
-                            <i class='bx bx-line-chart'></i><span>Uchambuzi</span>
+                            <i class='bx bx-line-chart'></i><span>Analysis</span>
                             <i class='bx bx-chevron-down ega-caret ms-auto'></i>
                         </div>
                     </summary>
                     <div class="ega-nav-sub">
                         <a href="{{ route('lecturerireport') }}" class="ega-nav-sub-link {{ $ac('lecturerireport') }}">
-                            <i class='bx bx-pie-chart-alt-2'></i> Uchambuzi wa Mahudhurio
+                            <i class='bx bx-pie-chart-alt-2'></i> Attendance Analysis
                         </a>
                     </div>
                 </details>
@@ -243,13 +249,13 @@
                 <details class="ega-nav-group {{ $lecDevicesOpen ? 'is-open' : '' }}" @if($lecDevicesOpen) open @endif>
                     <summary>
                         <div class="ega-nav-group-toggle">
-                            <i class='bx bx-devices'></i><span>Usimamizi wa Vifaa</span>
+                            <i class='bx bx-devices'></i><span>Device Management</span>
                             <i class='bx bx-chevron-down ega-caret ms-auto'></i>
                         </div>
                     </summary>
                     <div class="ega-nav-sub">
                         <a href="{{ route('devices.index') }}" class="ega-nav-sub-link {{ $ac('devices.*') }}">
-                            <i class='bx bx-fingerprint'></i> Vifaa vya Biometric
+                            <i class='bx bx-fingerprint'></i> Biometric Devices
                         </a>
                     </div>
                 </details>
@@ -258,195 +264,195 @@
 
         {{-- ████████ STUDENT ████████████████████████████████████████████████ --}}
         @if ($isStudent)
-            <li><div class="ega-nav-section">Muhtasari</div></li>
+            <li><div class="ega-nav-section">Overview</div></li>
             <li>
                 <a href="{{ route('studentdashboard') }}" class="ega-nav-link {{ $ac('studentdashboard') }}">
                     <i class='bx bx-tachometer'></i><span>Dashboard</span>
                 </a>
             </li>
 
-            <li><div class="ega-nav-section">Masomo Yangu</div></li>
+            <li><div class="ega-nav-section">My Studies</div></li>
             <li>
                 <a href="{{ route('studentmodules') }}" class="ega-nav-link {{ $ac('studentmodules') }}">
-                    <i class='bx bx-book'></i><span>Moduli Zangu</span>
+                    <i class='bx bx-book'></i><span>My Modules</span>
                 </a>
             </li>
             <li>
                 <a href="{{ route('studenttimetable') }}" class="ega-nav-link {{ $ac('studenttimetable') }}">
-                    <i class='bx bx-calendar'></i><span>Ratiba Yangu</span>
+                    <i class='bx bx-calendar'></i><span>My Timetable</span>
                 </a>
             </li>
 
-            <li><div class="ega-nav-section">Akaunti</div></li>
+            <li><div class="ega-nav-section">Account</div></li>
             <li>
                 <a href="{{ route('profile.edit') }}" class="ega-nav-link {{ $ac('profile.edit') }}">
-                    <i class='bx bx-user-circle'></i><span>Wasifu Wangu</span>
+                    <i class='bx bx-user-circle'></i><span>My Profile</span>
                 </a>
             </li>
         @endif
 
         {{-- ████████ REGISTRAR ██████████████████████████████████████████████ --}}
         @if ($isRegistrar)
-            <li><div class="ega-nav-section">Muhtasari</div></li>
+            <li><div class="ega-nav-section">Overview</div></li>
             <li>
                 <a href="{{ route('registrardashboard') }}" class="ega-nav-link {{ $ac('registrardashboard') }}">
                     <i class='bx bx-tachometer'></i><span>Dashboard</span>
                 </a>
             </li>
-            <li><div class="ega-nav-section">Ripoti & Takwimu</div></li>
+            <li><div class="ega-nav-section">Reports & Statistics</div></li>
             <li>
                 <a href="{{ route('management.attendance-report') }}" class="ega-nav-link {{ $ac('management.attendance-report') }}">
-                    <i class='bx bx-file-blank'></i><span>Ripoti ya Mahudhurio</span>
+                    <i class='bx bx-file-blank'></i><span>Attendance Report</span>
                 </a>
             </li>
             <li>
                 <a href="{{ route('analytics.dashboard') }}" class="ega-nav-link {{ $ac('analytics.dashboard') }}">
-                    <i class='bx bx-bar-chart-alt-2'></i><span>Takwimu</span>
+                    <i class='bx bx-bar-chart-alt-2'></i><span>Statistics</span>
                 </a>
             </li>
-            <li><div class="ega-nav-section">Akaunti</div></li>
+            <li><div class="ega-nav-section">Account</div></li>
             <li>
                 <a href="{{ route('profile.edit') }}" class="ega-nav-link {{ $ac('profile.edit') }}">
-                    <i class='bx bx-user-circle'></i><span>Wasifu Wangu</span>
+                    <i class='bx bx-user-circle'></i><span>My Profile</span>
                 </a>
             </li>
         @endif
 
         {{-- ████████ EXAMINATION OFFICER ████████████████████████████████████ --}}
         @if ($isExamOfficer)
-            <li><div class="ega-nav-section">Muhtasari</div></li>
+            <li><div class="ega-nav-section">Overview</div></li>
             <li>
                 <a href="{{ route('examdashboard') }}" class="ega-nav-link {{ $ac('examdashboard') }}">
                     <i class='bx bx-tachometer'></i><span>Dashboard</span>
                 </a>
             </li>
-            <li><div class="ega-nav-section">Mitihani</div></li>
+            <li><div class="ega-nav-section">Examinations</div></li>
             <li>
                 <a href="{{ route('exam.eligibility') }}" class="ega-nav-link {{ $ac('exam.eligibility') }}">
-                    <i class='bx bx-check-shield'></i><span>Orodha ya Kufuzu</span>
+                    <i class='bx bx-check-shield'></i><span>Eligibility List</span>
                 </a>
             </li>
             <li>
                 <a href="{{ route('exam.timetable') }}" class="ega-nav-link {{ $ac('exam.timetable') }}">
-                    <i class='bx bx-calendar-alt'></i><span>Ratiba ya Mitihani</span>
+                    <i class='bx bx-calendar-alt'></i><span>Exam Timetable</span>
                 </a>
             </li>
-            <li><div class="ega-nav-section">Ripoti & Watumiaji</div></li>
+            <li><div class="ega-nav-section">Reports & Users</div></li>
             <li>
                 <a href="{{ route('exam.reports') }}" class="ega-nav-link {{ $ac('exam.reports') }}">
-                    <i class='bx bx-file-blank'></i><span>Ripoti za Mahudhurio</span>
+                    <i class='bx bx-file-blank'></i><span>Attendance Reports</span>
                 </a>
             </li>
             <li>
                 <a href="{{ route('management.attendance-report') }}" class="ega-nav-link {{ $ac('management.attendance-report') }}">
-                    <i class='bx bx-clipboard'></i><span>Ripoti ya Mahudhurio</span>
+                    <i class='bx bx-clipboard'></i><span>Attendance Report</span>
                 </a>
             </li>
             <li>
                 <a href="{{ route('analytics.dashboard') }}" class="ega-nav-link {{ $ac('analytics.dashboard') }}">
-                    <i class='bx bx-bar-chart-alt-2'></i><span>Takwimu</span>
+                    <i class='bx bx-bar-chart-alt-2'></i><span>Statistics</span>
                 </a>
             </li>
             <li>
                 <a href="{{ route('users.index') }}" class="ega-nav-link {{ $ac('users.*') }}">
-                    <i class='bx bx-group'></i><span>Simamia Watumiaji</span>
+                    <i class='bx bx-group'></i><span>Manage Users</span>
                 </a>
             </li>
-            <li><div class="ega-nav-section">Akaunti</div></li>
+            <li><div class="ega-nav-section">Account</div></li>
             <li>
                 <a href="{{ route('profile.edit') }}" class="ega-nav-link {{ $ac('profile.edit') }}">
-                    <i class='bx bx-user-circle'></i><span>Wasifu Wangu</span>
+                    <i class='bx bx-user-circle'></i><span>My Profile</span>
                 </a>
             </li>
         @endif
 
         {{-- ████████ QUALITY ASSURANCE ██████████████████████████████████████ --}}
         @if ($isQa)
-            <li><div class="ega-nav-section">Muhtasari</div></li>
+            <li><div class="ega-nav-section">Overview</div></li>
             <li>
                 <a href="{{ route('qadashboard') }}" class="ega-nav-link {{ $ac('qadashboard') }}">
                     <i class='bx bx-tachometer'></i><span>Dashboard</span>
                 </a>
             </li>
-            <li><div class="ega-nav-section">Udhibiti wa Ubora</div></li>
+            <li><div class="ega-nav-section">Quality Control</div></li>
             <li>
                 <a href="{{ route('management.attendance-report') }}" class="ega-nav-link {{ $ac('management.attendance-report') }}">
-                    <i class='bx bx-file-blank'></i><span>Ripoti ya Mahudhurio</span>
+                    <i class='bx bx-file-blank'></i><span>Attendance Report</span>
                 </a>
             </li>
             <li>
                 <a href="{{ route('analytics.dashboard') }}" class="ega-nav-link {{ $ac('analytics.dashboard') }}">
-                    <i class='bx bx-bar-chart-alt-2'></i><span>Takwimu</span>
+                    <i class='bx bx-bar-chart-alt-2'></i><span>Statistics</span>
                 </a>
             </li>
-            <li><div class="ega-nav-section">Akaunti</div></li>
+            <li><div class="ega-nav-section">Account</div></li>
             <li>
                 <a href="{{ route('profile.edit') }}" class="ega-nav-link {{ $ac('profile.edit') }}">
-                    <i class='bx bx-user-circle'></i><span>Wasifu Wangu</span>
+                    <i class='bx bx-user-circle'></i><span>My Profile</span>
                 </a>
             </li>
         @endif
 
         {{-- ████████ DIRECTOR ACADEMIC ██████████████████████████████████████ --}}
         @if ($isDirector)
-            <li><div class="ega-nav-section">Muhtasari</div></li>
+            <li><div class="ega-nav-section">Overview</div></li>
             <li>
                 <a href="{{ route('directordashboard') }}" class="ega-nav-link {{ $ac('directordashboard') }}">
                     <i class='bx bx-tachometer'></i><span>Dashboard</span>
                 </a>
             </li>
-            <li><div class="ega-nav-section">Uongozi wa Kitaaluma</div></li>
+            <li><div class="ega-nav-section">Academic Leadership</div></li>
             <li>
                 <a href="{{ route('director.faculties') }}" class="ega-nav-link {{ $ac('director.faculties') }}">
-                    <i class='bx bx-building'></i><span>Vitivo na Idara</span>
+                    <i class='bx bx-building'></i><span>Faculties & Departments</span>
                 </a>
             </li>
             <li>
                 <a href="{{ route('departments.index') }}" class="ega-nav-link {{ $ac('departments.*') }}">
-                    <i class='bx bx-category'></i><span>Idara</span>
+                    <i class='bx bx-category'></i><span>Departments</span>
                 </a>
             </li>
             <li>
                 <a href="{{ route('hods.index') }}" class="ega-nav-link {{ $ac('hods.*') }}">
-                    <i class='bx bx-briefcase-alt-2'></i><span>Wakuu wa Idara</span>
+                    <i class='bx bx-briefcase-alt-2'></i><span>Heads of Department</span>
                 </a>
             </li>
             <li>
                 <a href="{{ route('analytics.dashboard') }}" class="ega-nav-link {{ $ac('analytics.dashboard') }}">
-                    <i class='bx bx-bar-chart-alt-2'></i><span>Takwimu</span>
+                    <i class='bx bx-bar-chart-alt-2'></i><span>Statistics</span>
                 </a>
             </li>
-            <li><div class="ega-nav-section">Akaunti</div></li>
+            <li><div class="ega-nav-section">Account</div></li>
             <li>
                 <a href="{{ route('profile.edit') }}" class="ega-nav-link {{ $ac('profile.edit') }}">
-                    <i class='bx bx-user-circle'></i><span>Wasifu Wangu</span>
+                    <i class='bx bx-user-circle'></i><span>My Profile</span>
                 </a>
             </li>
         @endif
 
         {{-- ████████ RECTOR █████████████████████████████████████████████████ --}}
         @if ($isRector)
-            <li><div class="ega-nav-section">Muhtasari</div></li>
+            <li><div class="ega-nav-section">Overview</div></li>
             <li>
                 <a href="{{ route('rectordashboard') }}" class="ega-nav-link {{ $ac('rectordashboard') }}">
                     <i class='bx bx-tachometer'></i><span>Dashboard</span>
                 </a>
             </li>
-            <li><div class="ega-nav-section">Uongozi Mkuu</div></li>
+            <li><div class="ega-nav-section">Executive Leadership</div></li>
             <li>
                 <a href="{{ route('management.attendance-report') }}" class="ega-nav-link {{ $ac('management.attendance-report') }}">
-                    <i class='bx bx-file-blank'></i><span>Ripoti ya Mahudhurio</span>
+                    <i class='bx bx-file-blank'></i><span>Attendance Report</span>
                 </a>
             </li>
             <li>
                 <a href="{{ route('analytics.dashboard') }}" class="ega-nav-link {{ $ac('analytics.dashboard') }}">
-                    <i class='bx bx-bar-chart-alt-2'></i><span>Takwimu</span>
+                    <i class='bx bx-bar-chart-alt-2'></i><span>Statistics</span>
                 </a>
             </li>
-            <li><div class="ega-nav-section">Akaunti</div></li>
+            <li><div class="ega-nav-section">Account</div></li>
             <li>
                 <a href="{{ route('profile.edit') }}" class="ega-nav-link {{ $ac('profile.edit') }}">
-                    <i class='bx bx-user-circle'></i><span>Wasifu Wangu</span>
+                    <i class='bx bx-user-circle'></i><span>My Profile</span>
                 </a>
             </li>
         @endif
@@ -464,7 +470,7 @@
             </div>
             <form method="POST" action="{{ route('logout') }}" class="ms-auto">
                 @csrf
-                <button type="submit" class="ega-sidebar-logout" title="Toka Mfumoni">
+                <button type="submit" class="ega-sidebar-logout" title="Log Out">
                     <i class='bx bx-log-out'></i>
                 </button>
             </form>
@@ -514,7 +520,8 @@
 </div>{{-- .ega-shell --}}
 
 <script>
-    function openSidebar()  {
+    // ── Sidebar toggle ──────────────────────────────────────────────────────────
+    function openSidebar() {
         document.getElementById('appSidebar').classList.add('open');
         document.getElementById('sidebarOverlay').classList.add('show');
         document.body.style.overflow = 'hidden';
@@ -524,6 +531,49 @@
         document.getElementById('sidebarOverlay').classList.remove('show');
         document.body.style.overflow = '';
     }
+    function toggleSidebar() {
+        if (window.innerWidth < 768) {
+            var sidebar = document.getElementById('appSidebar');
+            sidebar.classList.contains('open') ? closeSidebar() : openSidebar();
+        } else {
+            var shell = document.querySelector('.ega-shell');
+            var hidden = shell.classList.toggle('sidebar-hidden');
+            localStorage.setItem('sidebarHidden', hidden);
+        }
+    }
+
+    // ── Dark / Light mode ───────────────────────────────────────────────────────
+    function toggleTheme() {
+        var html = document.documentElement;
+        var isDark = html.getAttribute('data-theme') === 'dark';
+        var next = isDark ? 'light' : 'dark';
+        html.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+        _applyThemeIcon(next);
+    }
+    function _applyThemeIcon(theme) {
+        var btn = document.getElementById('themeToggleBtn');
+        if (!btn) return;
+        var icon = btn.querySelector('i');
+        if (theme === 'dark') {
+            icon.className = 'bx bx-sun';
+            btn.title = 'Badilisha kwenye Mwanga (Light Mode)';
+        } else {
+            icon.className = 'bx bx-moon';
+            btn.title = 'Badilisha kwenye Giza (Dark Mode)';
+        }
+    }
+
+    // ── Init on page load ───────────────────────────────────────────────────────
+    (function () {
+        var theme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', theme);
+        _applyThemeIcon(theme);
+
+        if (window.innerWidth >= 768 && localStorage.getItem('sidebarHidden') === 'true') {
+            document.querySelector('.ega-shell').classList.add('sidebar-hidden');
+        }
+    })();
 </script>
 @stack('scripts')
 </body>

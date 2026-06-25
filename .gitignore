@@ -1,57 +1,57 @@
-# Environment and secrets
-.env
-.env.*
-!.env.example
-.env.backup
-.env.production
-/auth.json
+# # Environment and secrets
+# .env
+# .env.*
+# !.env.example
+# .env.backup
+# .env.production
+# /auth.json
 
-# Dependencies and build output
-/node_modules
-/vendor
-/public/build
-/public/hot
-/public/storage
-/npm-debug.log
-/yarn-error.log
+# # Dependencies and build output
+# /node_modules
+# /vendor
+# /public/build
+# /public/hot
+# /public/storage
+# /npm-debug.log
+# /yarn-error.log
 
-# Application/runtime artifacts
-*.log
-.phpactor.json
-.phpunit.result.cache
-/.phpunit.cache
-/storage/*.key
-/storage/app/*
-!/storage/app/.gitignore
-/storage/framework/cache/*
-!/storage/framework/cache/.gitignore
-/storage/framework/cache/data/*
-!/storage/framework/cache/data/.gitignore
-/storage/framework/sessions/*
-!/storage/framework/sessions/.gitignore
-/storage/framework/testing/*
-!/storage/framework/testing/.gitignore
-/storage/framework/views/*
-!/storage/framework/views/.gitignore
-/storage/logs/*
-!/storage/logs/.gitignore
-/storage/pail
-/bootstrap/cache/*
-!/bootstrap/cache/.gitignore
+# # Application/runtime artifacts
+# *.log
+# .phpactor.json
+# .phpunit.result.cache
+# /.phpunit.cache
+# /storage/*.key
+# /storage/app/*
+# !/storage/app/.gitignore
+# /storage/framework/cache/*
+# !/storage/framework/cache/.gitignore
+# /storage/framework/cache/data/*
+# !/storage/framework/cache/data/.gitignore
+# /storage/framework/sessions/*
+# !/storage/framework/sessions/.gitignore
+# /storage/framework/testing/*
+# !/storage/framework/testing/.gitignore
+# /storage/framework/views/*
+# !/storage/framework/views/.gitignore
+# /storage/logs/*
+# !/storage/logs/.gitignore
+# /storage/pail
+# /bootstrap/cache/*
+# !/bootstrap/cache/.gitignore
 
-# Local database dumps can contain real students, users, and biometric logs.
-*.sql
-*.sqlite
-*.sqlite3
+# # Local database dumps can contain real students, users, and biometric logs.
+# *.sql
+# *.sqlite
+# *.sqlite3
 
-# Editor and OS files
-.codex
-.DS_Store
-/.fleet
-/.idea
-/.nova
-/.vscode
-/.zed
-Homestead.json
-Homestead.yaml
-Thumbs.db
+# # Editor and OS files
+# # .codex
+# .DS_Store
+# /.fleet
+# /.idea
+# /.nova
+# /.vscode
+# /.zed
+# Homestead.json
+# Homestead.yaml
+# Thumbs.db

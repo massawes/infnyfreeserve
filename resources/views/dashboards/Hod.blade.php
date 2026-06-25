@@ -1,91 +1,98 @@
 @extends('layouts.app')
-@section('page-title', 'Dashboard — HOD')
+@section('page-title', 'HOD Dashboard')
 
 @section('content')
 
-<div class="ent-page-header">
-    <div>
-        <h1 class="ent-page-title">Head of Department</h1>
-        <p class="ent-page-sub">
-            <i class='bx bx-buildings' style="color:var(--ent-primary)"></i>
-            {{ $department->department_name ?? 'Idara Yako' }}
-        </p>
+{{-- Hero --}}
+<div class="dash-hero">
+    <div class="dash-hero-eyebrow"><i class='bx bx-briefcase-alt-2'></i> Head of Department</div>
+    <h1 class="dash-hero-title">Welcome, {{ auth()->user()->name }}</h1>
+    <div class="dash-hero-sub">
+        <span class="dash-hero-chip"><i class='bx bx-buildings'></i> {{ $department->department_name ?? 'Your Department' }}</span>
+        <span class="dash-hero-chip"><i class='bx bx-calendar'></i> {{ now()->format('d M Y') }}</span>
     </div>
-    <div class="ent-page-actions">
-        <a href="{{ route('hod.analysis') }}"   class="ent-btn ent-btn-outline ent-btn-sm">
-            <i class='bx bx-line-chart'></i> Uchambuzi
-        </a>
-        <a href="{{ route('lecturers.index') }}" class="ent-btn ent-btn-outline ent-btn-sm">
-            <i class='bx bx-chalkboard'></i> Wahadhiri
-        </a>
-        <a href="{{ route('hodreport') }}"       class="ent-btn ent-btn-primary ent-btn-sm">
-            <i class='bx bx-file-blank'></i> Ripoti ya Moduli
-        </a>
+    <div class="dash-hero-actions">
+        <a href="{{ route('hodreport') }}"               class="dash-hero-btn primary"><i class='bx bx-file-blank'></i> Module Report</a>
+        <a href="{{ route('hod.analysis') }}"            class="dash-hero-btn ghost"><i class='bx bx-bar-chart-alt-2'></i> Analysis</a>
+        <a href="{{ route('moduledistribute.create') }}" class="dash-hero-btn ghost"><i class='bx bx-plus-circle'></i> Assign Module</a>
     </div>
 </div>
 
-{{-- Stat cards --}}
+{{-- Stats --}}
 <div class="row g-3 mb-4">
-    <div class="col-sm-6 col-xl-3">
-        <div class="ent-stat">
-            <div class="ent-stat-icon"><i class='bx bx-chalkboard'></i></div>
-            <div class="ent-stat-value">{{ $lecturersCount }}</div>
-            <div class="ent-stat-label">Wahadhiri wa Idara</div>
+    <div class="col-6 col-xl-3">
+        <div class="dash-stat dash-stat-blue">
+            <div class="dash-stat-icon"><i class='bx bx-chalkboard'></i></div>
+            <div class="dash-stat-value">{{ $lecturersCount }}</div>
+            <div class="dash-stat-label">Lecturers</div>
+            <div class="dash-stat-footer"><i class='bx bx-user-check'></i> Department staff</div>
         </div>
     </div>
-    <div class="col-sm-6 col-xl-3">
-        <div class="ent-stat ent-stat-info">
-            <div class="ent-stat-icon"><i class='bx bx-book'></i></div>
-            <div class="ent-stat-value">{{ $modulesCount }}</div>
-            <div class="ent-stat-label">Moduli Zote</div>
+    <div class="col-6 col-xl-3">
+        <div class="dash-stat dash-stat-purple">
+            <div class="dash-stat-icon"><i class='bx bx-book'></i></div>
+            <div class="dash-stat-value">{{ $modulesCount }}</div>
+            <div class="dash-stat-label">Modules</div>
+            <div class="dash-stat-footer"><i class='bx bx-book-open'></i> Registered modules</div>
         </div>
     </div>
-    <div class="col-sm-6 col-xl-3">
-        <div class="ent-stat ent-stat-success">
-            <div class="ent-stat-icon"><i class='bx bx-bookmark'></i></div>
-            <div class="ent-stat-value">{{ $programsCount }}</div>
-            <div class="ent-stat-label">Programu za Idara</div>
+    <div class="col-6 col-xl-3">
+        <div class="dash-stat dash-stat-green">
+            <div class="dash-stat-icon"><i class='bx bx-bookmark'></i></div>
+            <div class="dash-stat-value">{{ $programsCount }}</div>
+            <div class="dash-stat-label">Programs</div>
+            <div class="dash-stat-footer"><i class='bx bx-layer'></i> Academic programs</div>
         </div>
     </div>
-    <div class="col-sm-6 col-xl-3">
-        <div class="ent-stat ent-stat-warning">
-            <div class="ent-stat-icon"><i class='bx bx-graduation'></i></div>
-            <div class="ent-stat-value">{{ $studentsCount }}</div>
-            <div class="ent-stat-label">Wanafunzi wa Idara</div>
+    <div class="col-6 col-xl-3">
+        <div class="dash-stat dash-stat-amber">
+            <div class="dash-stat-icon"><i class='bx bx-graduation'></i></div>
+            <div class="dash-stat-value">{{ $studentsCount }}</div>
+            <div class="dash-stat-label">Students</div>
+            <div class="dash-stat-footer"><i class='bx bx-group'></i> Enrolled students</div>
         </div>
     </div>
 </div>
 
 <div class="row g-3">
-    {{-- Module assignments --}}
+    {{-- Module assignments table --}}
     <div class="col-lg-8">
         <div class="ent-card h-100">
             <div class="ent-card-header">
-                <h2 class="ent-card-title"><i class='bx bx-git-branch'></i> Mgawanyo wa Moduli</h2>
-                <span class="ent-badge ent-badge-primary">{{ $moduleDistributions->count() }} zilizoonyeshwa</span>
+                <h2 class="ent-card-title"><i class='bx bx-git-branch'></i> Module Assignments</h2>
+                <span class="ent-badge ent-badge-primary">{{ $moduleDistributions->count() }} shown</span>
             </div>
             <div class="ent-card-body" style="padding:0">
                 @if($moduleDistributions->isEmpty())
                     <div class="ent-empty">
                         <i class='bx bx-book-open'></i>
-                        <p>Hakuna ugawaji wa moduli bado.</p>
+                        <p>No module assignments yet.</p>
                     </div>
                 @else
                     <table class="ent-table">
                         <thead>
                             <tr>
-                                <th>Moduli</th>
-                                <th>Programu</th>
-                                <th>Mhadhiri</th>
+                                <th>#</th>
+                                <th>Module</th>
+                                <th>Program</th>
+                                <th>Lecturer</th>
                                 <th>NTA</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($moduleDistributions as $dist)
+                            @foreach($moduleDistributions as $i => $dist)
                                 <tr>
+                                    <td style="color:var(--ent-text-muted);font-weight:600">{{ $i+1 }}</td>
                                     <td style="font-weight:600">{{ $dist->module_name }}</td>
                                     <td style="color:var(--ent-text-muted)">{{ $dist->program_name }}</td>
-                                    <td style="color:var(--ent-text-muted)">{{ $dist->lecturer_name }}</td>
+                                    <td>
+                                        <span style="display:flex;align-items:center;gap:.4rem;color:var(--ent-text-muted)">
+                                            <span style="width:1.6rem;height:1.6rem;border-radius:50%;background:rgba(15,76,129,.1);color:var(--ent-primary);display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700;flex-shrink:0">
+                                                {{ strtoupper(substr($dist->lecturer_name ?? '?', 0, 2)) }}
+                                            </span>
+                                            {{ $dist->lecturer_name ?? 'N/A' }}
+                                        </span>
+                                    </td>
                                     <td><span class="ent-badge ent-badge-info">NTA {{ $dist->nta_level }}</span></td>
                                 </tr>
                             @endforeach
@@ -96,45 +103,58 @@
         </div>
     </div>
 
-    {{-- Lecturers & quick links --}}
+    {{-- Right column --}}
     <div class="col-lg-4">
-        {{-- Quick links --}}
+        {{-- Quick actions --}}
         <div class="ent-card mb-3">
             <div class="ent-card-header">
-                <h2 class="ent-card-title"><i class='bx bx-link-alt'></i> Viungo vya Haraka</h2>
+                <h2 class="ent-card-title"><i class='bx bx-rocket'></i> Quick Actions</h2>
             </div>
-            <div class="ent-card-body" style="display:flex;flex-direction:column;gap:.4rem">
-                <a href="{{ route('hodreport') }}"               class="ent-btn ent-btn-outline ent-btn-sm"><i class='bx bx-file-blank'></i> Ripoti ya Moduli</a>
-                <a href="{{ route('hod.analysis') }}"            class="ent-btn ent-btn-outline ent-btn-sm"><i class='bx bx-bar-chart-alt-2'></i> Uchambuzi wa Mahudhurio</a>
-                <a href="{{ route('moduledistribute.create') }}" class="ent-btn ent-btn-outline ent-btn-sm"><i class='bx bx-plus-circle'></i> Gawa Moduli Mpya</a>
-                <a href="{{ route('students.index') }}"          class="ent-btn ent-btn-outline ent-btn-sm"><i class='bx bx-graduation'></i> Simamia Wanafunzi</a>
+            <div class="ent-card-body">
+                <div class="dash-action-grid" style="grid-template-columns:repeat(2,1fr)">
+                    <a href="{{ route('hodreport') }}"               class="dash-action-card">
+                        <div class="dash-action-icon" style="background:rgba(59,130,246,.1);color:#3b82f6"><i class='bx bx-file-blank'></i></div>
+                        <div class="dash-action-label">Module Report</div>
+                    </a>
+                    <a href="{{ route('hod.analysis') }}"            class="dash-action-card">
+                        <div class="dash-action-icon" style="background:rgba(139,92,246,.1);color:#8b5cf6"><i class='bx bx-bar-chart-alt-2'></i></div>
+                        <div class="dash-action-label">Analysis</div>
+                    </a>
+                    <a href="{{ route('moduledistribute.create') }}" class="dash-action-card">
+                        <div class="dash-action-icon" style="background:rgba(16,185,129,.1);color:#10b981"><i class='bx bx-plus-circle'></i></div>
+                        <div class="dash-action-label">Assign Module</div>
+                    </a>
+                    <a href="{{ route('students.index') }}"          class="dash-action-card">
+                        <div class="dash-action-icon" style="background:rgba(245,158,11,.1);color:#f59e0b"><i class='bx bx-graduation'></i></div>
+                        <div class="dash-action-label">Students</div>
+                    </a>
+                </div>
             </div>
         </div>
 
         {{-- Lecturers list --}}
         <div class="ent-card">
             <div class="ent-card-header">
-                <h2 class="ent-card-title"><i class='bx bx-group'></i> Wahadhiri wa Hivi Karibuni</h2>
+                <h2 class="ent-card-title"><i class='bx bx-group'></i> Lecturers</h2>
+                <span class="ent-badge ent-badge-default">{{ $lecturers->count() }}</span>
             </div>
             <div class="ent-card-body" style="padding:0">
                 @if($lecturers->isEmpty())
                     <div class="ent-empty" style="padding:1.5rem">
                         <i class='bx bx-user-x'></i>
-                        <p>Hakuna wahadhiri bado.</p>
+                        <p>No lecturers yet.</p>
                     </div>
                 @else
                     @foreach($lecturers as $lecturer)
-                        <div style="display:flex;align-items:center;gap:.65rem;padding:.65rem 1.25rem;border-bottom:1px solid var(--ent-border-light)">
-                            <div style="width:2rem;height:2rem;border-radius:50%;background:rgba(15,76,129,.1);color:var(--ent-primary);display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:700;flex-shrink:0">
+                        <div class="dash-person">
+                            <div class="dash-person-avatar">
                                 {{ strtoupper(substr($lecturer->lecturer_name ?? $lecturer->user->name ?? '?', 0, 2)) }}
                             </div>
-                            <div style="min-width:0">
-                                <div style="font-size:.84rem;font-weight:600;color:var(--ent-text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">
-                                    {{ $lecturer->lecturer_name ?? $lecturer->user->name ?? 'N/A' }}
-                                </div>
-                                <div style="font-size:.72rem;color:var(--ent-text-muted)">Mhadhiri</div>
+                            <div style="flex:1;min-width:0">
+                                <div class="dash-person-name">{{ $lecturer->lecturer_name ?? $lecturer->user->name ?? 'N/A' }}</div>
+                                <div class="dash-person-sub">Lecturer</div>
                             </div>
-                            <span class="ent-status-dot online ms-auto"></span>
+                            <span class="ent-status-dot online"></span>
                         </div>
                     @endforeach
                 @endif

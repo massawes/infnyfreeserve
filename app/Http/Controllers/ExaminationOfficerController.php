@@ -77,6 +77,10 @@ class ExaminationOfficerController extends Controller
 
     public function eligibility(Request $request)
     {
+        if (! auth()->user()->hasPermission('exam_view_eligibility')) {
+            abort(403, 'You do not have permission to view exam eligibility.');
+        }
+
         $query = DB::table('attendances as a')
             ->join('students as s', 'a.student_id', '=', 's.id')
             ->join('users as u', 's.user_id', '=', 'u.id')
@@ -128,6 +132,10 @@ class ExaminationOfficerController extends Controller
 
     public function reports(Request $request)
     {
+        if (! auth()->user()->hasPermission('exam_view_reports')) {
+            abort(403, 'You do not have permission to view exam reports.');
+        }
+
         $programStatsQuery = DB::table('programs as p')
             ->leftJoin('students as s', 'p.id', '=', 's.program_id')
             ->leftJoin('attendances as a', 's.id', '=', 'a.student_id')
@@ -164,6 +172,10 @@ class ExaminationOfficerController extends Controller
 
     public function timetable(Request $request)
     {
+        if (! auth()->user()->hasPermission('exam_manage_timetable')) {
+            abort(403, 'You do not have permission to manage the exam timetable.');
+        }
+
         $examData = ClassTiming::with(['week', 'moduleDistribution.module.program', 'moduleDistribution.lecturer'])
             ->select('class_timings.*')
             ->join('module_distributions as md', 'class_timings.module_distribution_id', '=', 'md.id')

@@ -32,6 +32,23 @@ use App\Http\Controllers\UserManagementController;
 use App\Http\Controllers\WeekManagementController;
 use App\Http\Controllers\ZkbioRealtimeController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
+
+// TEMPORARY SETUP ROUTE — DELETE THIS AFTER FIRST DEPLOYMENT!
+// Visit: yourdomain.com/run-setup-once-then-delete
+Route::get('/run-setup-once-then-delete', function () {
+    if (app()->environment('local')) {
+        return 'Not allowed on local.';
+    }
+    try {
+        Artisan::call('migrate', ['--force' => true]);
+        $migrate = Artisan::output();
+        Artisan::call('storage:link');
+        return '<pre>DONE!<br>' . $migrate . '<br>Setup complete. DELETE this route from routes/web.php now!</pre>';
+    } catch (\Exception $e) {
+        return '<pre>ERROR: ' . $e->getMessage() . '</pre>';
+    }
+});
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/zkbio/realtime-sync', [ZkbioRealtimeController::class, 'sync'])
