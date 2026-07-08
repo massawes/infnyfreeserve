@@ -47,7 +47,7 @@ class ModuleDistributionController extends Controller
 
         $modules = Module::whereHas('program', function ($query) use ($departmentId) {
             $query->where('department_id', $departmentId);
-        })->orderBy('module_name')->paginate(6)->withQueryString();
+        })->where('semester', 'Semester 2')->orderBy('module_name')->paginate(6)->withQueryString();
 
         $lecturers = User::where('role_id', 2)
             ->where('department_id', $departmentId)
@@ -141,7 +141,7 @@ class ModuleDistributionController extends Controller
 
         $modules = Module::whereHas('program', function ($query) use ($departmentId) {
             $query->where('department_id', $departmentId);
-        })->get();
+        })->where('semester', 'Semester 2')->get();
 
         $lecturers = User::where('role_id', 2)
             ->where('department_id', $departmentId)
@@ -193,6 +193,7 @@ class ModuleDistributionController extends Controller
     private function isAllowedModule(int|string $moduleId): bool
     {
         return Module::where('id', $moduleId)
+            ->where('semester', 'Semester 2')
             ->whereHas('program', function ($query) {
                 $query->where('department_id', $this->hodDepartmentId());
             })

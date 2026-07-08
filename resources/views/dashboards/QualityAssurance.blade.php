@@ -4,7 +4,7 @@
 @section('content')
 
 {{-- Hero --}}
-<div class="dash-hero" style="background:linear-gradient(135deg,#065f46 0%,#0d9488 50%,#0891b2 100%)">
+<div class="dash-hero">
     <div class="dash-hero-eyebrow"><i class='bx bx-badge-check'></i> Quality Assurance Office</div>
     <h1 class="dash-hero-title">Welcome, {{ auth()->user()->name }}</h1>
     <div class="dash-hero-sub">
@@ -25,7 +25,7 @@
 {{-- Stats --}}
 <div class="row g-3 mb-4">
     <div class="col-6 col-xl-3">
-        <div class="dash-stat dash-stat-teal">
+        <div class="dash-stat">
             <div class="dash-stat-icon"><i class='bx bx-book'></i></div>
             <div class="dash-stat-value">{{ $totalModules }}</div>
             <div class="dash-stat-label">Total Modules</div>
@@ -54,7 +54,7 @@
         </div>
     </div>
     <div class="col-6 col-xl-3">
-        <div class="dash-stat dash-stat-blue">
+        <div class="dash-stat">
             <div class="dash-stat-icon"><i class='bx bx-chalkboard'></i></div>
             <div class="dash-stat-value">{{ $totalLecturers }}</div>
             <div class="dash-stat-label">Lecturers</div>
@@ -128,19 +128,19 @@
                 <div class="row g-2">
                     <div class="col-6">
                         <div class="dash-metric-block">
-                            <div class="dash-metric-value" style="color:#14b8a6">{{ $totalModules }}</div>
+                            <div class="dash-metric-value">{{ $totalModules }}</div>
                             <div class="dash-metric-label"><i class='bx bx-book'></i> Modules</div>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="dash-metric-block">
-                            <div class="dash-metric-value" style="color:#3b82f6">{{ $totalPrograms }}</div>
+                            <div class="dash-metric-value">{{ $totalPrograms }}</div>
                             <div class="dash-metric-label"><i class='bx bx-bookmark'></i> Programs</div>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="dash-metric-block">
-                            <div class="dash-metric-value" style="color:#f59e0b">{{ $modulesWithoutTimetables }}</div>
+                            <div class="dash-metric-value">{{ $modulesWithoutTimetables }}</div>
                             <div class="dash-metric-label"><i class='bx bx-calendar-x'></i> No Timetable</div>
                         </div>
                     </div>
@@ -161,19 +161,19 @@
             <div class="ent-card-body">
                 <div class="dash-action-grid" style="grid-template-columns:repeat(2,1fr)">
                     <a href="{{ route('modules.index') }}"        class="dash-action-card">
-                        <div class="dash-action-icon" style="background:rgba(20,184,166,.1);color:#14b8a6"><i class='bx bx-book'></i></div>
+                        <div class="dash-action-icon"><i class='bx bx-book'></i></div>
                         <div class="dash-action-label">Modules</div>
                     </a>
                     <a href="{{ route('reports.management') }}"   class="dash-action-card">
-                        <div class="dash-action-icon" style="background:rgba(59,130,246,.1);color:#3b82f6"><i class='bx bx-file-blank'></i></div>
+                        <div class="dash-action-icon"><i class='bx bx-file-blank'></i></div>
                         <div class="dash-action-label">Reports</div>
                     </a>
                     <a href="{{ route('programs.index') }}"       class="dash-action-card">
-                        <div class="dash-action-icon" style="background:rgba(139,92,246,.1);color:#8b5cf6"><i class='bx bx-bookmark'></i></div>
+                        <div class="dash-action-icon"><i class='bx bx-bookmark'></i></div>
                         <div class="dash-action-label">Programs</div>
                     </a>
                     <a href="{{ route('departments.index') }}"    class="dash-action-card">
-                        <div class="dash-action-icon" style="background:rgba(245,158,11,.1);color:#f59e0b"><i class='bx bx-buildings'></i></div>
+                        <div class="dash-action-icon"><i class='bx bx-buildings'></i></div>
                         <div class="dash-action-label">Departments</div>
                     </a>
                 </div>

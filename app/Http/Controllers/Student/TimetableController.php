@@ -23,6 +23,7 @@ class TimetableController extends Controller
             ->join('module_distributions as md', 'ct.module_distribution_id', '=', 'md.id')
             ->join('modules as m', 'md.module_id', '=', 'm.id')
             ->where('m.program_id', $student->program_id)
+            ->where('m.semester', 'Semester 2')
             ->select(
                 'ct.day',
                 'ct.time',

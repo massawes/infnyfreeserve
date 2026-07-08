@@ -87,6 +87,7 @@ class ManagementAttendanceReportController extends Controller
         $weeks = DB::table('weeks')->orderBy('id')->get();
         $programs = DB::table('programs')->orderBy('program_name')->get();
         $modules = DB::table('modules')
+            ->where('semester', 'Semester 2')
             ->select('id', 'module_name', 'program_id')
             ->orderBy('module_name')
             ->get();

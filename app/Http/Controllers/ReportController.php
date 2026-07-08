@@ -64,6 +64,7 @@ class ReportController extends Controller
             ->join('programs as p', 'm.program_id', '=', 'p.id')
             ->join('users as u', 'md.user_id', '=', 'u.id')
             ->where('p.department_id', $departmentId)
+            ->where('m.semester', 'Semester 2')
             ->when($request->filled('academic_year'), function ($query) use ($request) {
                 $query->where('md.academic_year', trim((string) $request->academic_year));
             })
@@ -84,6 +85,7 @@ class ReportController extends Controller
             ->join('modules as m', 'md.module_id', '=', 'm.id')
             ->join('programs as p', 'm.program_id', '=', 'p.id')
             ->where('md.user_id', $user->id)
+            ->where('m.semester', 'Semester 2')
             ->select(
                 'm.module_name',
                 'm.nta_level',

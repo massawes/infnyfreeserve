@@ -31,6 +31,7 @@ class ReportiController extends Controller
             ->join('modules as m', 'md.module_id', '=', 'm.id')
             ->join('programs as p', 'm.program_id', '=', 'p.id')
             ->where('md.user_id', $lecturerId)
+            ->where('m.semester', 'Semester 2')
             ->select(
                 'm.id',
                 'm.module_name',
@@ -233,6 +234,7 @@ class ReportiController extends Controller
         $modules = DB::table('modules as m')
             ->join('programs as p', 'm.program_id', '=', 'p.id')
             ->where('p.department_id', $departmentId)
+            ->where('m.semester', 'Semester 2')
             ->select('m.id', 'm.module_name', 'm.module_code', 'm.nta_level', 'p.program_name')
             ->distinct()
             ->orderBy('m.module_name')

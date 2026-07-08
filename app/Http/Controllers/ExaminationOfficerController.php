@@ -13,7 +13,7 @@ class ExaminationOfficerController extends Controller
     public function dashboard()
     {
         $totalStudents = Student::count();
-        $totalModules = Module::count();
+        $totalModules = Module::where('semester', 'Semester 2')->count();
 
         $attendanceStats = DB::table('attendances')
             ->select(
@@ -125,7 +125,7 @@ class ExaminationOfficerController extends Controller
         }
 
         $eligibilityData = $query->paginate(10)->withQueryString();
-        $modules = Module::all();
+        $modules = Module::where('semester', 'Semester 2')->get();
 
         return view('exam.eligibility', compact('eligibilityData', 'modules'));
     }

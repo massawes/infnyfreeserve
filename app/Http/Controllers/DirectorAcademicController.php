@@ -66,7 +66,7 @@ class DirectorAcademicController extends Controller
             // Hizi zingefaa kuwa relationships e.g., $dept->modules->count() lakini tutatumia fallback ikikosekana
             $dept->total_modules = Module::whereHas('program', function($q) use ($dept) {
                 $q->where('department_id', $dept->id);
-            })->count();
+            })->where('semester', 'Semester 2')->count();
         }
 
         return view('dashboards.director_faculties', compact('departments'));

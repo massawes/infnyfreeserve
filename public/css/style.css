@@ -1,13 +1,12 @@
 body {
     font-family: 'Segoe UI', sans-serif;
-    /* background: #f4f6f9; */
-    background: #ffc0cb;
+    background: #F4F6F8;
     padding: 20px;
 }
 
 h2 {
     margin: auto;
-    color: #333;
+    color: #1F2937;
 }
 
 .form-group {
@@ -34,7 +33,7 @@ input {
 
 .module-card h4 {
     margin: 0;
-    color: #007bff;
+    color: #0F4C81;
 }
 
 .module-card p {
@@ -49,7 +48,7 @@ select {
 }
 
 button {
-    background: linear-gradient(45deg, #007bff, #00c6ff);
+    background: #0F4C81;
     border: none;
     padding: 12px 25px;
     color: white;

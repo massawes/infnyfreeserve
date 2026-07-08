@@ -4,7 +4,7 @@
 @section('content')
 
 {{-- Hero --}}
-<div class="dash-hero" style="background:linear-gradient(135deg,#065f46 0%,#059669 55%,#0ea5e9 100%)">
+<div class="dash-hero">
     <div class="dash-hero-eyebrow"><i class='bx bx-chalkboard'></i> Lecturer Portal</div>
     <h1 class="dash-hero-title">Good day, {{ auth()->user()->name }}</h1>
     <div class="dash-hero-sub">
@@ -21,7 +21,7 @@
 {{-- Stats --}}
 <div class="row g-3 mb-4">
     <div class="col-sm-4">
-        <div class="dash-stat dash-stat-navy">
+        <div class="dash-stat">
             <div class="dash-stat-icon"><i class='bx bx-book'></i></div>
             <div class="dash-stat-value">{{ $totalModules }}</div>
             <div class="dash-stat-label">Assigned Modules</div>
@@ -29,7 +29,7 @@
         </div>
     </div>
     <div class="col-sm-4">
-        <div class="dash-stat dash-stat-green">
+        <div class="dash-stat">
             <div class="dash-stat-icon"><i class='bx bx-door-open'></i></div>
             <div class="dash-stat-value">{{ $totalClasses }}</div>
             <div class="dash-stat-label">Total Classes</div>
@@ -37,7 +37,7 @@
         </div>
     </div>
     <div class="col-sm-4">
-        <div class="dash-stat dash-stat-blue">
+        <div class="dash-stat">
             <div class="dash-stat-icon"><i class='bx bx-graduation'></i></div>
             <div class="dash-stat-value">{{ $totalStudents }}</div>
             <div class="dash-stat-label">Students</div>
@@ -55,32 +55,32 @@
     <div class="ent-card-body">
         <div class="dash-action-grid">
             <a href="{{ route('lecturerireport') }}"    class="dash-action-card">
-                <div class="dash-action-icon" style="background:rgba(139,92,246,.1);color:#8b5cf6"><i class='bx bx-pie-chart-alt-2'></i></div>
+                <div class="dash-action-icon"><i class='bx bx-pie-chart-alt-2'></i></div>
                 <div class="dash-action-label">Attendance Analysis</div>
                 <div class="dash-action-desc">View statistics</div>
             </a>
             <a href="{{ route('lecturerclasstiming') }}" class="dash-action-card">
-                <div class="dash-action-icon" style="background:rgba(20,184,166,.1);color:#14b8a6"><i class='bx bx-calendar-check'></i></div>
+                <div class="dash-action-icon"><i class='bx bx-calendar-check'></i></div>
                 <div class="dash-action-label">Class Timetable</div>
                 <div class="dash-action-desc">Schedule & timings</div>
             </a>
             <a href="{{ route('lecturerclasses') }}"    class="dash-action-card">
-                <div class="dash-action-icon" style="background:rgba(59,130,246,.1);color:#3b82f6"><i class='bx bx-door-open'></i></div>
+                <div class="dash-action-icon"><i class='bx bx-door-open'></i></div>
                 <div class="dash-action-label">My Classes</div>
                 <div class="dash-action-desc">Manage sessions</div>
             </a>
             <a href="{{ route('attendanceindex') }}"    class="dash-action-card">
-                <div class="dash-action-icon" style="background:rgba(16,185,129,.1);color:#10b981"><i class='bx bx-pencil'></i></div>
+                <div class="dash-action-icon"><i class='bx bx-pencil'></i></div>
                 <div class="dash-action-label">Manual Attendance</div>
                 <div class="dash-action-desc">Mark present/absent</div>
             </a>
             <a href="{{ route('attendance.records.index') }}" class="dash-action-card">
-                <div class="dash-action-icon" style="background:rgba(245,158,11,.1);color:#f59e0b"><i class='bx bx-spreadsheet'></i></div>
+                <div class="dash-action-icon"><i class='bx bx-spreadsheet'></i></div>
                 <div class="dash-action-label">Attendance Records</div>
                 <div class="dash-action-desc">View all records</div>
             </a>
             <a href="{{ route('devices.index') }}"      class="dash-action-card">
-                <div class="dash-action-icon" style="background:rgba(79,70,229,.1);color:#4f46e5"><i class='bx bx-fingerprint'></i></div>
+                <div class="dash-action-icon"><i class='bx bx-fingerprint'></i></div>
                 <div class="dash-action-label">Biometric Devices</div>
                 <div class="dash-action-desc">Device management</div>
             </a>

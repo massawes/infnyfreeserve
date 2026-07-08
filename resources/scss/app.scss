@@ -164,8 +164,8 @@ $box-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
     --ent-primary:       #0F4C81;
     --ent-primary-light: #1565C0;
     --ent-primary-dark:  #0a3560;
-    --ent-secondary:     #00695C;
-    --ent-accent:        #1976D2;
+    --ent-secondary:     #0a3560;
+    --ent-accent:        #1565C0;
     --ent-success:       #2E7D32;
     --ent-warning:       #F9A825;
     --ent-danger:        #D32F2F;
@@ -779,15 +779,15 @@ $sidebar-w: 260px;
     i { font-size: .82rem; }
 }
 
-.role-student   { background: #E3F2FD; color: #1565C0; }
-.role-lecturer  { background: #E8F5E9; color: #2E7D32; }
-.role-hod       { background: #FFF8E1; color: #F57F17; }
-.role-registrar { background: #F3E5F5; color: #6A1B9A; }
-.role-exam      { background: #FFEBEE; color: #C62828; }
-.role-qa        { background: #E0F7FA; color: #00695C; }
-.role-director  { background: #FCE4EC; color: #880E4F; }
-.role-rector    { background: #FFF3E0; color: #E65100; }
-.role-default   { background: var(--ent-bg); color: var(--ent-text-muted); }
+.role-student,
+.role-lecturer,
+.role-hod,
+.role-registrar,
+.role-exam,
+.role-qa,
+.role-director,
+.role-rector,
+.role-default   { background: rgba(15,76,129,.1); color: var(--ent-primary); }
 
 // User button
 .ega-user-btn {
@@ -1804,6 +1804,7 @@ $sidebar-w: 260px;
 }
 
 .dash-metric-value {
+    color: var(--ent-primary);
     font-size: 2.2rem;
     font-weight: 800;
     letter-spacing: -.04em;
@@ -3267,26 +3268,10 @@ $ega-gold:  #FCD116;
     position: relative;
 }
 
-// Hero with background image
+// Hero — solid brand-color background (no image, no gradient mix)
 .ega-hero--img {
-    background-image: var(--hero-bg, none);
-    background-size: cover;
-    background-position: center 30%;
-    background-repeat: no-repeat;
+    background: $ega-blue;
     border-bottom: none;
-
-    &::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(
-            110deg,
-            rgba(15,23,42,.90) 0%,
-            rgba(27,58,107,.82) 55%,
-            rgba(15,23,42,.70) 100%
-        );
-        z-index: 0;
-    }
 
     > .container-fluid { position: relative; z-index: 1; }
 }
@@ -3306,18 +3291,17 @@ $ega-gold:  #FCD116;
 
 .ega-copy--white { color: rgba(255,255,255,.82); }
 
-.ega-btn-gold {
-    background: $ega-gold !important;
-    color: #0f172a !important;
-    border: 2px solid $ega-gold !important;
-    box-shadow: 0 4px 18px rgba(252,209,22,.35) !important;
+.ega-btn-white {
+    background: #fff !important;
+    color: $ega-blue !important;
+    border: 2px solid #fff !important;
 
     &:hover {
-        background: #e8c000 !important;
-        color: #0f172a !important;
-        border-color: #e8c000 !important;
+        background: rgba(255,255,255,.88) !important;
+        color: $ega-blue !important;
+        border-color: rgba(255,255,255,.88) !important;
         transform: translateY(-2px);
-        box-shadow: 0 8px 24px rgba(252,209,22,.4) !important;
+        box-shadow: 0 8px 24px rgba(0,0,0,.18) !important;
     }
 }
 
@@ -3444,9 +3428,6 @@ $ega-gold:  #FCD116;
     font-size: 1.2rem;
     flex-shrink: 0;
 }
-
-.ega-pill-green { background: rgba(30,181,58,.1); color: #17942e; }
-.ega-pill-gold  { background: rgba(252,209,22,.15); color: #8a6b00; }
 
 .ega-pill-title { font-weight: 700; font-size: .88rem; color: #1a1a2e; line-height: 1.2; }
 .ega-pill-sub   { font-size: .75rem; color: #64748b; }
@@ -3836,9 +3817,6 @@ $ega-gold:  #FCD116;
     border: 1px solid rgba(255,255,255,.1);
 }
 
-.ega-cap-green { background: rgba(30,181,58,.2);  color: #4ade80;  border-color: rgba(74,222,128,.2); }
-.ega-cap-gold  { background: rgba(252,209,22,.15); color: $ega-gold; border-color: rgba(252,209,22,.2); }
-.ega-cap-teal  { background: rgba(14,165,233,.18); color: #7dd3fc;  border-color: rgba(14,165,233,.2); }
 
 @media (max-width: 767.98px) {
     .ega-dash-body { padding: 1.25rem; }
@@ -3876,7 +3854,7 @@ $ega-gold:  #FCD116;
     border-radius: .85rem;
     padding: 2rem 1.75rem;
     border: 1px solid #e2e8f0;
-    border-top: 4px solid transparent;
+    border-top: 4px solid $ega-blue;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -3888,10 +3866,6 @@ $ega-gold:  #FCD116;
     }
 }
 
-.ega-card-blue  { border-top-color: $ega-blue; }
-.ega-card-green { border-top-color: $ega-green; }
-.ega-card-gold  { border-top-color: #e8c000; }
-
 .ega-card-icon {
     width: 3.25rem;
     height: 3.25rem;
@@ -3901,10 +3875,8 @@ $ega-gold:  #FCD116;
     justify-content: center;
     font-size: 1.55rem;
     margin-bottom: 1.25rem;
-
-    .ega-card-blue &  { background: rgba(27,58,107,.1);  color: $ega-blue; }
-    .ega-card-green & { background: rgba(30,181,58,.1);  color: #17942e; }
-    .ega-card-gold &  { background: rgba(252,209,22,.15); color: #8a6b00; }
+    background: rgba(27,58,107,.1);
+    color: $ega-blue;
 }
 
 .ega-card-title {
@@ -3930,9 +3902,6 @@ $ega-gold:  #FCD116;
     font-weight: 700;
     text-decoration: none;
     color: $ega-blue;
-
-    .ega-card-green & { color: #158026; }
-    .ega-card-gold  & { color: #8a6b00; }
 
     &:hover { text-decoration: underline; }
 }

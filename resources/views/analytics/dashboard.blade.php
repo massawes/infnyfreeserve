@@ -1,30 +1,30 @@
 @extends('layouts.app')
-@section('page-title', 'Takwimu za Mahudhurio')
+@section('page-title', 'Attendance Statistics')
 
 @section('content')
 
 {{-- ── Page Header ─────────────────────────────────────────────────────────── --}}
 <div class="ent-page-header">
     <div>
-        <h1 class="ent-page-title">Takwimu za Mahudhurio</h1>
+        <h1 class="ent-page-title">Attendance Statistics</h1>
         <p class="ent-page-sub">
-            Uchambuzi wa kina wa mahudhurio — idara, programu, moduli na wanafunzi
+            Detailed attendance analysis — department, program, module and students
             <span class="an-scope-badge">
                 <i class='bx bx-buildings'></i>
-                {{ $scopeLabel ?: 'Taasisi Nzima' }}
+                {{ $scopeLabel ?: 'Entire Institution' }}
             </span>
         </p>
     </div>
     <div class="ent-page-actions">
         <div class="an-live-badge">
             <span class="ent-status-dot online"></span>
-            <span id="lastUpdated">Imesasishwa: {{ now()->format('H:i:s') }}</span>
+            <span id="lastUpdated">Updated: {{ now()->format('H:i:s') }}</span>
         </div>
-        <button onclick="location.reload()" class="ent-btn ent-btn-outline ent-btn-sm" title="Sasisha">
-            <i class='bx bx-refresh'></i> Sasisha
+        <button onclick="location.reload()" class="ent-btn ent-btn-outline ent-btn-sm" title="Refresh">
+            <i class='bx bx-refresh'></i> Refresh
         </button>
         <a href="{{ route('management.attendance-report') }}" class="ent-btn ent-btn-primary ent-btn-sm">
-            <i class='bx bx-file-blank'></i> Ripoti Kamili
+            <i class='bx bx-file-blank'></i> Full Report
         </a>
     </div>
 </div>
@@ -32,10 +32,10 @@
 {{-- ── Filter Bar ───────────────────────────────────────────────────────────── --}}
 <div class="ent-card mb-4">
     <div class="ent-card-header">
-        <h2 class="ent-card-title"><i class='bx bx-filter-alt'></i> Chuja Data</h2>
+        <h2 class="ent-card-title"><i class='bx bx-filter-alt'></i> Filter Data</h2>
         @if($selectedDepartmentId || $selectedProgramId || $selectedModuleId)
             <a href="{{ route('analytics.dashboard') }}" class="ent-badge ent-badge-danger" style="text-decoration:none;cursor:pointer">
-                <i class='bx bx-x'></i> Ondoa Vichujio
+                <i class='bx bx-x'></i> Clear Filters
             </a>
         @endif
     </div>
@@ -44,9 +44,9 @@
             <div class="row g-3 align-items-end">
                 @if($canFilterDepartment)
                     <div class="col-md-4 col-lg-3">
-                        <label class="ent-label">Idara</label>
+                        <label class="ent-label">Department</label>
                         <select name="department_id" id="department_id" class="ent-input" onchange="document.getElementById('filterForm').submit()">
-                            <option value="">Idara Zote</option>
+                            <option value="">All Departments</option>
                             @foreach($departments as $dept)
                                 <option value="{{ $dept->id }}" @selected((string)$selectedDepartmentId === (string)$dept->id)>
                                     {{ $dept->department_name }}
@@ -56,9 +56,9 @@
                     </div>
                 @endif
                 <div class="col-md-4 col-lg-3">
-                    <label class="ent-label">Programu</label>
+                    <label class="ent-label">Program</label>
                     <select name="program_id" id="program_id" class="ent-input" onchange="document.getElementById('filterForm').submit()">
-                        <option value="">Programu Zote</option>
+                        <option value="">All Programs</option>
                         @foreach($programs as $prog)
                             <option value="{{ $prog->id }}"
                                 data-department-id="{{ $prog->department_id }}"
@@ -69,9 +69,9 @@
                     </select>
                 </div>
                 <div class="col-md-4 col-lg-3">
-                    <label class="ent-label">Moduli / Somo</label>
+                    <label class="ent-label">Module</label>
                     <select name="module_id" id="module_id" class="ent-input" onchange="document.getElementById('filterForm').submit()">
-                        <option value="">Moduli Zote</option>
+                        <option value="">All Modules</option>
                         @foreach($modules as $mod)
                             <option value="{{ $mod->id }}"
                                 data-program-id="{{ $mod->program_id }}"
@@ -84,7 +84,7 @@
                 </div>
                 <div class="col-md-4 col-lg-3 d-flex gap-2">
                     <button type="submit" class="ent-btn ent-btn-primary w-100">
-                        <i class='bx bx-search-alt'></i> Tafuta
+                        <i class='bx bx-search-alt'></i> Search
                     </button>
                     <a href="{{ route('analytics.dashboard') }}" class="ent-btn ent-btn-outline">
                         <i class='bx bx-reset'></i>
@@ -101,10 +101,10 @@
         <div class="ent-stat">
             <div class="ent-stat-icon"><i class='bx bx-group'></i></div>
             <div class="ent-stat-value">{{ number_format($totalStudents) }}</div>
-            <div class="ent-stat-label">Wanafunzi Waliorekodiwa</div>
+            <div class="ent-stat-label">Students Recorded</div>
             <div class="ent-stat-trend up">
                 <i class='bx bx-calendar-check'></i>
-                {{ number_format($totalRecords) }} rekodi zote
+                {{ number_format($totalRecords) }} total records
             </div>
         </div>
     </div>
@@ -112,10 +112,10 @@
         <div class="ent-stat {{ $attendanceRate >= 75 ? 'ent-stat-success' : 'ent-stat-warning' }}">
             <div class="ent-stat-icon"><i class='bx bx-user-check'></i></div>
             <div class="ent-stat-value">{{ $attendanceRate }}%</div>
-            <div class="ent-stat-label">Wastani wa Mahudhurio</div>
+            <div class="ent-stat-label">Average Attendance</div>
             <div class="ent-stat-trend {{ $attendanceRate >= 75 ? 'up' : 'down' }}">
                 <i class='bx {{ $attendanceRate >= 75 ? "bx-trending-up" : "bx-trending-down" }}'></i>
-                {{ $attendanceRate >= 75 ? 'Inafikia kiwango cha 75%' : 'Chini ya kiwango cha 75%' }}
+                {{ $attendanceRate >= 75 ? 'Meets the 75% target' : 'Below the 75% target' }}
             </div>
         </div>
     </div>
@@ -123,10 +123,10 @@
         <div class="ent-stat ent-stat-success">
             <div class="ent-stat-icon"><i class='bx bx-check-circle'></i></div>
             <div class="ent-stat-value">{{ number_format($present) }}</div>
-            <div class="ent-stat-label">Rekodi za Kuwepo</div>
+            <div class="ent-stat-label">Present Records</div>
             <div class="ent-stat-trend up">
                 <i class='bx bx-trending-up'></i>
-                {{ $totalRecords > 0 ? round(($present / $totalRecords) * 100, 1) : 0 }}% ya jumla
+                {{ $totalRecords > 0 ? round(($present / $totalRecords) * 100, 1) : 0 }}% of total
             </div>
         </div>
     </div>
@@ -134,10 +134,10 @@
         <div class="ent-stat ent-stat-danger">
             <div class="ent-stat-icon"><i class='bx bx-error-circle'></i></div>
             <div class="ent-stat-value">{{ number_format($atRiskStudents) }}</div>
-            <div class="ent-stat-label">Wanafunzi Walio Hatarini</div>
+            <div class="ent-stat-label">Students At Risk</div>
             <div class="ent-stat-trend down">
                 <i class='bx bx-alarm-exclamation'></i>
-                Chini ya 75% mahudhurio
+                Below 75% attendance
             </div>
         </div>
     </div>
@@ -149,14 +149,14 @@
     <div class="col-xl-8">
         <div class="ent-card h-100">
             <div class="ent-card-header">
-                <h2 class="ent-card-title"><i class='bx bx-line-chart'></i> Mwenendo wa Mahudhurio kwa Wiki</h2>
-                <span class="ent-badge ent-badge-info">{{ $weeklyStats->count() }} wiki</span>
+                <h2 class="ent-card-title"><i class='bx bx-line-chart'></i> Weekly Attendance Trend</h2>
+                <span class="ent-badge ent-badge-info">{{ $weeklyStats->count() }} weeks</span>
             </div>
             <div class="ent-card-body">
                 @if($weeklyStats->isEmpty())
                     <div class="ent-empty">
                         <i class='bx bx-line-chart'></i>
-                        <p>Hakuna data ya wiki bado. Jaribu mwaka huu.</p>
+                        <p>No weekly data yet. Try this year.</p>
                     </div>
                 @else
                     <div class="an-chart-wrap">
@@ -171,30 +171,30 @@
     <div class="col-xl-4">
         <div class="ent-card h-100">
             <div class="ent-card-header">
-                <h2 class="ent-card-title"><i class='bx bx-pie-chart-alt-2'></i> Kuwepo Dhidi ya Kutokuwepo</h2>
+                <h2 class="ent-card-title"><i class='bx bx-pie-chart-alt-2'></i> Present vs Absent</h2>
             </div>
             <div class="ent-card-body" style="display:flex;flex-direction:column;align-items:center;gap:1rem">
                 @if($totalRecords === 0)
                     <div class="ent-empty">
                         <i class='bx bx-pie-chart'></i>
-                        <p>Hakuna rekodi bado.</p>
+                        <p>No records yet.</p>
                     </div>
                 @else
                     <div class="an-donut-wrap">
                         <canvas id="summaryChart"></canvas>
                         <div class="an-donut-center">
                             <div class="an-donut-val">{{ $attendanceRate }}%</div>
-                            <div class="an-donut-lbl">Kuwepo</div>
+                            <div class="an-donut-lbl">Present</div>
                         </div>
                     </div>
                     <div class="an-donut-legend">
                         <div class="an-legend-item">
                             <span class="an-legend-dot" style="background:#2E7D32"></span>
-                            <span>Kuwepo: <strong>{{ number_format($present) }}</strong></span>
+                            <span>Present: <strong>{{ number_format($present) }}</strong></span>
                         </div>
                         <div class="an-legend-item">
                             <span class="an-legend-dot" style="background:#D32F2F"></span>
-                            <span>Kutokuwepo: <strong>{{ number_format($absent) }}</strong></span>
+                            <span>Absent: <strong>{{ number_format($absent) }}</strong></span>
                         </div>
                     </div>
                 @endif
@@ -208,14 +208,14 @@
     <div class="col-xl-6">
         <div class="ent-card h-100">
             <div class="ent-card-header">
-                <h2 class="ent-card-title"><i class='bx bx-bar-chart-alt-2'></i> Utendaji kwa Programu</h2>
-                <span class="ent-badge ent-badge-primary">{{ $programStats->count() }} programu</span>
+                <h2 class="ent-card-title"><i class='bx bx-bar-chart-alt-2'></i> Performance by Program</h2>
+                <span class="ent-badge ent-badge-primary">{{ $programStats->count() }} programs</span>
             </div>
             <div class="ent-card-body">
                 @if($programStats->isEmpty())
                     <div class="ent-empty">
                         <i class='bx bx-bookmark'></i>
-                        <p>Hakuna data ya programu.</p>
+                        <p>No program data available.</p>
                     </div>
                 @else
                     <div class="an-chart-wrap">
@@ -228,14 +228,14 @@
     <div class="col-xl-6">
         <div class="ent-card h-100">
             <div class="ent-card-header">
-                <h2 class="ent-card-title"><i class='bx bx-book-open'></i> Utendaji kwa Moduli</h2>
-                <span class="ent-badge ent-badge-warning">{{ $moduleStats->count() }} moduli</span>
+                <h2 class="ent-card-title"><i class='bx bx-book-open'></i> Performance by Module</h2>
+                <span class="ent-badge ent-badge-warning">{{ $moduleStats->count() }} modules</span>
             </div>
             <div class="ent-card-body">
                 @if($moduleStats->isEmpty())
                     <div class="ent-empty">
                         <i class='bx bx-book'></i>
-                        <p>Hakuna data ya moduli.</p>
+                        <p>No module data available.</p>
                     </div>
                 @else
                     <div class="an-chart-wrap">
@@ -254,22 +254,22 @@
     <div class="col-xl-5">
         <div class="ent-card h-100">
             <div class="ent-card-header">
-                <h2 class="ent-card-title"><i class='bx bx-buildings'></i> Ulinganisho wa Idara</h2>
-                <span class="ent-badge ent-badge-primary">{{ $departmentStats->count() }} idara</span>
+                <h2 class="ent-card-title"><i class='bx bx-buildings'></i> Department Comparison</h2>
+                <span class="ent-badge ent-badge-primary">{{ $departmentStats->count() }} departments</span>
             </div>
             <div class="ent-card-body" style="padding:0">
                 @if($departmentStats->isEmpty())
                     <div class="ent-empty">
                         <i class='bx bx-building'></i>
-                        <p>Hakuna data ya idara.</p>
+                        <p>No department data available.</p>
                     </div>
                 @else
                     <table class="ent-table">
                         <thead>
                             <tr>
-                                <th>Idara</th>
-                                <th style="text-align:right">Rekodi</th>
-                                <th style="text-align:right">Mahudhurio</th>
+                                <th>Department</th>
+                                <th style="text-align:right">Records</th>
+                                <th style="text-align:right">Attendance</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -301,7 +301,7 @@
     <div class="{{ $canFilterDepartment ? 'col-xl-7' : 'col-xl-12' }}">
         <div class="ent-card h-100">
             <div class="ent-card-header">
-                <h2 class="ent-card-title"><i class='bx bx-trophy'></i> Muhtasari wa Utendaji</h2>
+                <h2 class="ent-card-title"><i class='bx bx-trophy'></i> Performance Summary</h2>
             </div>
             <div class="ent-card-body">
                 <div class="row g-3">
@@ -309,18 +309,18 @@
                     <div class="col-md-6">
                         <div class="an-highlight-box an-highlight-success">
                             <div class="an-highlight-head">
-                                <i class='bx bx-star'></i> Programu Bora (Mahudhurio Juu)
+                                <i class='bx bx-star'></i> Top Programs (High Attendance)
                             </div>
                             @forelse($topPrograms as $prog)
                                 <div class="an-highlight-row">
                                     <div class="an-highlight-label">
                                         <div class="an-highlight-name">{{ $prog->program_name }}</div>
-                                        <div class="an-highlight-sub">{{ $prog->present_records }}/{{ $prog->total_records }} kuwepo</div>
+                                        <div class="an-highlight-sub">{{ $prog->present_records }}/{{ $prog->total_records }} present</div>
                                     </div>
                                     <span class="ent-badge ent-badge-success">{{ $prog->attendance_percentage }}%</span>
                                 </div>
                             @empty
-                                <div class="an-highlight-empty">Hakuna data ya programu.</div>
+                                <div class="an-highlight-empty">No program data available.</div>
                             @endforelse
                         </div>
                     </div>
@@ -328,13 +328,13 @@
                     <div class="col-md-6">
                         <div class="an-highlight-box an-highlight-danger">
                             <div class="an-highlight-head">
-                                <i class='bx bx-error'></i> Moduli Zinazohitaji Umakini
+                                <i class='bx bx-error'></i> Modules Needing Attention
                             </div>
                             @forelse($lowModules as $mod)
                                 <div class="an-highlight-row">
                                     <div class="an-highlight-label">
                                         <div class="an-highlight-name">{{ $mod->module_name }}</div>
-                                        <div class="an-highlight-sub">{{ $mod->present_records }}/{{ $mod->total_records }} kuwepo</div>
+                                        <div class="an-highlight-sub">{{ $mod->present_records }}/{{ $mod->total_records }} present</div>
                                     </div>
                                     @if($mod->attendance_percentage >= 75)
                                         <span class="ent-badge ent-badge-warning">{{ $mod->attendance_percentage }}%</span>
@@ -343,7 +343,7 @@
                                     @endif
                                 </div>
                             @empty
-                                <div class="an-highlight-empty">Hakuna moduli zenye tatizo.</div>
+                                <div class="an-highlight-empty">No modules with issues.</div>
                             @endforelse
                         </div>
                     </div>
@@ -540,7 +540,7 @@
         data: {
             labels: weeklyLabels,
             datasets: [{
-                label: 'Mahudhurio %',
+                label: 'Attendance %',
                 data: weeklyData,
                 borderColor: P,
                 backgroundColor: 'rgba(15,76,129,.07)',
@@ -552,7 +552,7 @@
                 pointRadius: 5,
                 pointHoverRadius: 7,
             }, {
-                label: 'Kiwango cha Chini (75%)',
+                label: 'Minimum Target (75%)',
                 data: weeklyLabels.map(() => 75),
                 borderColor: D,
                 borderDash: [6, 4],
@@ -596,7 +596,7 @@
     new Chart(document.getElementById('summaryChart'), {
         type: 'doughnut',
         data: {
-            labels: ['Kuwepo', 'Kutokuwepo'],
+            labels: ['Present', 'Absent'],
             datasets: [{
                 data: [{{ $present }}, {{ $absent }}],
                 backgroundColor: [S, D],
@@ -627,7 +627,7 @@
         data: {
             labels: programLabels,
             datasets: [{
-                label: 'Mahudhurio %',
+                label: 'Attendance %',
                 data: programData,
                 backgroundColor: programData.map(v => v >= 75 ? 'rgba(46,125,50,.8)' : 'rgba(249,168,37,.85)'),
                 borderRadius: 6,
@@ -639,7 +639,7 @@
             plugins: {
                 tooltip: {
                     backgroundColor: '#1E293B',
-                    callbacks: { label: ctx => ` ${ctx.raw}% mahudhurio` }
+                    callbacks: { label: ctx => ` ${ctx.raw}% attendance` }
                 }
             },
             scales: {
@@ -664,9 +664,9 @@
         data: {
             labels: moduleLabels,
             datasets: [{
-                label: 'Mahudhurio %',
+                label: 'Attendance %',
                 data: moduleData,
-                backgroundColor: moduleData.map(v => v >= 75 ? 'rgba(2,136,209,.8)' : 'rgba(211,47,47,.8)'),
+                backgroundColor: moduleData.map(v => v >= 75 ? 'rgba(46,125,50,.8)' : 'rgba(211,47,47,.8)'),
                 borderRadius: 6,
                 borderSkipped: false,
             }]
@@ -676,7 +676,7 @@
             plugins: {
                 tooltip: {
                     backgroundColor: '#1E293B',
-                    callbacks: { label: ctx => ` ${ctx.raw}% mahudhurio` }
+                    callbacks: { label: ctx => ` ${ctx.raw}% attendance` }
                 }
             },
             scales: {

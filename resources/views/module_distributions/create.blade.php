@@ -1,13 +1,13 @@
 @extends('layouts.app')
-@section('page-title', 'Gawa Moduli kwa Wahadhiri')
+@section('page-title', 'Assign Modules to Lecturers')
 
 @section('content')
 
 {{-- Page header --}}
 <div class="ent-page-header">
     <div>
-        <h1 class="ent-page-title">Gawa Moduli kwa Wahadhiri</h1>
-        <p class="ent-page-sub">Simamia ugawaji wa moduli kwa mwaka wa masomo wa idara yako</p>
+        <h1 class="ent-page-title">Assign Modules to Lecturers</h1>
+        <p class="ent-page-sub">Manage module distribution for your department's academic year</p>
     </div>
     <div class="ent-page-actions">
         <button
@@ -29,7 +29,7 @@
         />
         <a href="{{ route('moduledistribute.index', ['academic_year' => old('academic_year', $selectedAcademicYear)]) }}"
            class="ent-btn ent-btn-outline ent-btn-sm">
-            <i class='bx bx-list-ul'></i> Tazama Zilizohifadhiwa
+            <i class='bx bx-list-ul'></i> View Saved Distributions
         </a>
     </div>
 </div>
@@ -56,35 +56,35 @@
     {{-- Academic year + actions bar --}}
     <div class="ent-card mb-4">
         <div class="ent-card-header">
-            <h2 class="ent-card-title"><i class='bx bx-calendar-alt'></i> Mwaka wa Masomo</h2>
+            <h2 class="ent-card-title"><i class='bx bx-calendar-alt'></i> Academic Year</h2>
         </div>
         <div class="ent-card-body">
             <div class="row g-3 align-items-end">
                 <div class="col-sm-6 col-lg-4">
-                    <label class="ent-label">Weka Mwaka wa Masomo</label>
+                    <label class="ent-label">Enter Academic Year</label>
                     <input
                         type="text"
                         name="academic_year"
                         id="academicYearInput"
                         class="ent-input @error('academic_year') is-invalid @enderror"
                         value="{{ old('academic_year', $selectedAcademicYear) }}"
-                        placeholder="mfano: 2025/2026"
+                        placeholder="e.g. 2025/2026"
                         required
                     >
                     @error('academic_year')
                         <div class="invalid-feedback d-block" style="font-size:.78rem;color:var(--ent-danger);margin-top:.25rem">{{ $message }}</div>
                     @enderror
                     <div style="font-size:.72rem;color:var(--ent-text-muted);margin-top:.3rem">
-                        Inaonyesha ugawaji wa: <strong>{{ old('academic_year', $selectedAcademicYear) }}</strong>
+                        Showing distribution for: <strong>{{ old('academic_year', $selectedAcademicYear) }}</strong>
                     </div>
                 </div>
                 <div class="col-sm-6 col-lg-8 d-flex flex-wrap align-items-center gap-2 justify-content-sm-end">
                     <a href="{{ route('moduledistribute.create', ['academic_year' => old('academic_year', $selectedAcademicYear)]) }}"
                        class="ent-btn ent-btn-outline ent-btn-sm">
-                        <i class='bx bx-refresh'></i> Pakia Upya
+                        <i class='bx bx-refresh'></i> Reload
                     </a>
                     <button type="submit" class="ent-btn ent-btn-primary ent-btn-sm">
-                        <i class='bx bx-save'></i> Hifadhi Ugawaji Wote
+                        <i class='bx bx-save'></i> Save All Distributions
                     </button>
                 </div>
             </div>
@@ -95,16 +95,16 @@
     <div class="am-summary-bar mb-3">
         <div class="am-summary-item">
             <i class='bx bx-book'></i>
-            <span><strong>{{ $modules->total() }}</strong> moduli zote</span>
+            <span><strong>{{ $modules->total() }}</strong> total modules</span>
         </div>
         <div class="am-summary-item">
             <i class='bx bx-chalkboard'></i>
-            <span><strong>{{ $lecturers->count() }}</strong> wahadhiri wanaopatikana</span>
+            <span><strong>{{ $lecturers->count() }}</strong> available lecturers</span>
         </div>
         <div class="am-summary-divider"></div>
         <div class="am-summary-item">
             <i class='bx bx-info-circle'></i>
-            <span>Chagua mhadhiri kwa kila moduli kisha bonyeza "Hifadhi"</span>
+            <span>Select a lecturer for each module then click "Save"</span>
         </div>
     </div>
 
@@ -112,7 +112,7 @@
     @if($modules->isEmpty())
         <div class="ent-empty ent-card">
             <i class='bx bx-book-open'></i>
-            <p>Hakuna moduli zinazopatikana kwa mwaka huu wa masomo.</p>
+            <p>No modules available for this academic year.</p>
         </div>
     @else
         <div class="am-grid">
@@ -129,7 +129,7 @@
                     {{-- Status dot --}}
                     <div class="am-card-status">
                         <span class="ent-status-dot {{ $isAssigned ? 'online' : 'offline' }}"></span>
-                        <span class="am-card-status-text">{{ $isAssigned ? 'Imegawiwa' : 'Haijagawiwa' }}</span>
+                        <span class="am-card-status-text">{{ $isAssigned ? 'Assigned' : 'Unassigned' }}</span>
                     </div>
 
                     {{-- Module name --}}
@@ -155,7 +155,7 @@
                     {{-- Assign select --}}
                     <div class="am-card-field">
                         <label class="ent-label" for="dist_{{ $module->id }}">
-                            <i class='bx bx-user-pin'></i> Mhadhiri wa Moduli Hii
+                            <i class='bx bx-user-pin'></i> Lecturer for This Module
                         </label>
                         <select
                             name="distributions[{{ $module->id }}]"
@@ -163,7 +163,7 @@
                             class="ent-input am-select"
                             onchange="markChanged(this)"
                         >
-                            <option value="">— Chagua Mhadhiri —</option>
+                            <option value="">— Select Lecturer —</option>
                             @foreach($lecturers as $lecturer)
                                 <option
                                     value="{{ $lecturer->id }}"
@@ -187,10 +187,10 @@
         <div class="am-save-bar">
             <span class="am-save-bar-info">
                 <i class='bx bx-info-circle'></i>
-                Mabadiliko hayatahifadhiwa mpaka ubonyeze "Hifadhi"
+                Changes will not be saved until you click "Save"
             </span>
             <button type="submit" class="ent-btn ent-btn-primary">
-                <i class='bx bx-save'></i> Hifadhi Ugawaji Wote
+                <i class='bx bx-save'></i> Save All Distributions
             </button>
         </div>
     @endif

@@ -21,7 +21,7 @@
 {{-- Stats --}}
 <div class="row g-3 mb-4">
     <div class="col-6 col-xl-3">
-        <div class="dash-stat dash-stat-blue">
+        <div class="dash-stat">
             <div class="dash-stat-icon"><i class='bx bx-chalkboard'></i></div>
             <div class="dash-stat-value">{{ $lecturersCount }}</div>
             <div class="dash-stat-label">Lecturers</div>
@@ -29,7 +29,7 @@
         </div>
     </div>
     <div class="col-6 col-xl-3">
-        <div class="dash-stat dash-stat-purple">
+        <div class="dash-stat">
             <div class="dash-stat-icon"><i class='bx bx-book'></i></div>
             <div class="dash-stat-value">{{ $modulesCount }}</div>
             <div class="dash-stat-label">Modules</div>
@@ -37,7 +37,7 @@
         </div>
     </div>
     <div class="col-6 col-xl-3">
-        <div class="dash-stat dash-stat-green">
+        <div class="dash-stat">
             <div class="dash-stat-icon"><i class='bx bx-bookmark'></i></div>
             <div class="dash-stat-value">{{ $programsCount }}</div>
             <div class="dash-stat-label">Programs</div>
@@ -45,7 +45,7 @@
         </div>
     </div>
     <div class="col-6 col-xl-3">
-        <div class="dash-stat dash-stat-amber">
+        <div class="dash-stat">
             <div class="dash-stat-icon"><i class='bx bx-graduation'></i></div>
             <div class="dash-stat-value">{{ $studentsCount }}</div>
             <div class="dash-stat-label">Students</div>
@@ -113,19 +113,19 @@
             <div class="ent-card-body">
                 <div class="dash-action-grid" style="grid-template-columns:repeat(2,1fr)">
                     <a href="{{ route('hodreport') }}"               class="dash-action-card">
-                        <div class="dash-action-icon" style="background:rgba(59,130,246,.1);color:#3b82f6"><i class='bx bx-file-blank'></i></div>
+                        <div class="dash-action-icon"><i class='bx bx-file-blank'></i></div>
                         <div class="dash-action-label">Module Report</div>
                     </a>
                     <a href="{{ route('hod.analysis') }}"            class="dash-action-card">
-                        <div class="dash-action-icon" style="background:rgba(139,92,246,.1);color:#8b5cf6"><i class='bx bx-bar-chart-alt-2'></i></div>
+                        <div class="dash-action-icon"><i class='bx bx-bar-chart-alt-2'></i></div>
                         <div class="dash-action-label">Analysis</div>
                     </a>
                     <a href="{{ route('moduledistribute.create') }}" class="dash-action-card">
-                        <div class="dash-action-icon" style="background:rgba(16,185,129,.1);color:#10b981"><i class='bx bx-plus-circle'></i></div>
+                        <div class="dash-action-icon"><i class='bx bx-plus-circle'></i></div>
                         <div class="dash-action-label">Assign Module</div>
                     </a>
                     <a href="{{ route('students.index') }}"          class="dash-action-card">
-                        <div class="dash-action-icon" style="background:rgba(245,158,11,.1);color:#f59e0b"><i class='bx bx-graduation'></i></div>
+                        <div class="dash-action-icon"><i class='bx bx-graduation'></i></div>
                         <div class="dash-action-label">Students</div>
                     </a>
                 </div>

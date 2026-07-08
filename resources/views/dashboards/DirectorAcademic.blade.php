@@ -4,7 +4,7 @@
 @section('content')
 
 {{-- Hero --}}
-<div class="dash-hero" style="background:linear-gradient(135deg,#1e1b4b 0%,#3730a3 50%,#6366f1 80%,#0ea5e9 100%)">
+<div class="dash-hero">
     <div class="dash-hero-eyebrow"><i class='bx bx-building'></i> Academic Directorate</div>
     <h1 class="dash-hero-title">Welcome, {{ auth()->user()->name }}</h1>
     <div class="dash-hero-sub">
@@ -21,7 +21,7 @@
 {{-- Stats --}}
 <div class="row g-3 mb-4">
     <div class="col-6 col-xl-3">
-        <div class="dash-stat dash-stat-navy">
+        <div class="dash-stat">
             <div class="dash-stat-icon"><i class='bx bx-buildings'></i></div>
             <div class="dash-stat-value">{{ $totalDepartments }}</div>
             <div class="dash-stat-label">Departments</div>
@@ -29,7 +29,7 @@
         </div>
     </div>
     <div class="col-6 col-xl-3">
-        <div class="dash-stat dash-stat-purple">
+        <div class="dash-stat">
             <div class="dash-stat-icon"><i class='bx bx-bookmark'></i></div>
             <div class="dash-stat-value">{{ $totalPrograms }}</div>
             <div class="dash-stat-label">Programs</div>
@@ -37,7 +37,7 @@
         </div>
     </div>
     <div class="col-6 col-xl-3">
-        <div class="dash-stat dash-stat-blue">
+        <div class="dash-stat">
             <div class="dash-stat-icon"><i class='bx bx-graduation'></i></div>
             <div class="dash-stat-value">{{ $totalStudents }}</div>
             <div class="dash-stat-label">Students</div>
@@ -130,25 +130,25 @@
                 <div class="row g-2">
                     <div class="col-6">
                         <div class="dash-metric-block">
-                            <div class="dash-metric-value" style="color:#4f46e5">{{ $totalDepartments }}</div>
+                            <div class="dash-metric-value">{{ $totalDepartments }}</div>
                             <div class="dash-metric-label"><i class='bx bx-buildings'></i> Departments</div>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="dash-metric-block">
-                            <div class="dash-metric-value" style="color:#8b5cf6">{{ $totalPrograms }}</div>
+                            <div class="dash-metric-value">{{ $totalPrograms }}</div>
                             <div class="dash-metric-label"><i class='bx bx-bookmark'></i> Programs</div>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="dash-metric-block">
-                            <div class="dash-metric-value" style="color:#3b82f6">{{ $totalStudents }}</div>
+                            <div class="dash-metric-value">{{ $totalStudents }}</div>
                             <div class="dash-metric-label"><i class='bx bx-graduation'></i> Students</div>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="dash-metric-block">
-                            <div class="dash-metric-value" style="color:#10b981">{{ $totalLecturers }}</div>
+                            <div class="dash-metric-value">{{ $totalLecturers }}</div>
                             <div class="dash-metric-label"><i class='bx bx-chalkboard'></i> Lecturers</div>
                         </div>
                     </div>
@@ -164,19 +164,19 @@
             <div class="ent-card-body">
                 <div class="dash-action-grid" style="grid-template-columns:repeat(2,1fr)">
                     <a href="{{ route('departments.index') }}"  class="dash-action-card">
-                        <div class="dash-action-icon" style="background:rgba(79,70,229,.1);color:#4f46e5"><i class='bx bx-buildings'></i></div>
+                        <div class="dash-action-icon"><i class='bx bx-buildings'></i></div>
                         <div class="dash-action-label">Departments</div>
                     </a>
                     <a href="{{ route('programs.index') }}"     class="dash-action-card">
-                        <div class="dash-action-icon" style="background:rgba(139,92,246,.1);color:#8b5cf6"><i class='bx bx-bookmark'></i></div>
+                        <div class="dash-action-icon"><i class='bx bx-bookmark'></i></div>
                         <div class="dash-action-label">Programs</div>
                     </a>
                     <a href="{{ route('modules.index') }}"      class="dash-action-card">
-                        <div class="dash-action-icon" style="background:rgba(59,130,246,.1);color:#3b82f6"><i class='bx bx-book'></i></div>
+                        <div class="dash-action-icon"><i class='bx bx-book'></i></div>
                         <div class="dash-action-label">Modules</div>
                     </a>
                     <a href="{{ route('reports.management') }}" class="dash-action-card">
-                        <div class="dash-action-icon" style="background:rgba(16,185,129,.1);color:#10b981"><i class='bx bx-file-blank'></i></div>
+                        <div class="dash-action-icon"><i class='bx bx-file-blank'></i></div>
                         <div class="dash-action-label">Reports</div>
                     </a>
                 </div>

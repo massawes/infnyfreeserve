@@ -20,6 +20,7 @@ class StudentController extends Controller
         $departmentName = $student?->program?->department?->department_name;
 
         $modules = Module::where('program_id', $program_id)
+            ->where('semester', 'Semester 2')
             ->orderBy('module_name')
             ->get();
         $totalModules = $modules->count();

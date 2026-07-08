@@ -4,7 +4,7 @@
 @section('content')
 
 {{-- Hero --}}
-<div class="dash-hero" style="background:linear-gradient(135deg,#4c1d95 0%,#7c3aed 50%,#6366f1 100%)">
+<div class="dash-hero">
     <div class="dash-hero-eyebrow"><i class='bx bx-check-shield'></i> Examination Office</div>
     <h1 class="dash-hero-title">Welcome, {{ auth()->user()->name }}</h1>
     <div class="dash-hero-sub">
@@ -23,7 +23,7 @@
 {{-- Stats --}}
 <div class="row g-3 mb-4">
     <div class="col-6 col-xl-3">
-        <div class="dash-stat dash-stat-blue">
+        <div class="dash-stat">
             <div class="dash-stat-icon"><i class='bx bx-graduation'></i></div>
             <div class="dash-stat-value">{{ $totalStudents }}</div>
             <div class="dash-stat-label">Total Students</div>
@@ -31,7 +31,7 @@
         </div>
     </div>
     <div class="col-6 col-xl-3">
-        <div class="dash-stat dash-stat-purple">
+        <div class="dash-stat">
             <div class="dash-stat-icon"><i class='bx bx-book'></i></div>
             <div class="dash-stat-value">{{ $totalModules }}</div>
             <div class="dash-stat-label">Total Modules</div>
@@ -110,17 +110,17 @@
             <div class="ent-card-body">
                 <div class="dash-action-grid" style="grid-template-columns:repeat(3,1fr)">
                     <a href="{{ route('exam.eligibility') }}" class="dash-action-card">
-                        <div class="dash-action-icon" style="background:rgba(16,185,129,.1);color:#10b981"><i class='bx bx-list-check'></i></div>
+                        <div class="dash-action-icon"><i class='bx bx-list-check'></i></div>
                         <div class="dash-action-label">Eligibility</div>
                         <div class="dash-action-desc">Check clearance</div>
                     </a>
                     <a href="{{ route('exam.timetable') }}"   class="dash-action-card">
-                        <div class="dash-action-icon" style="background:rgba(59,130,246,.1);color:#3b82f6"><i class='bx bx-calendar-event'></i></div>
+                        <div class="dash-action-icon"><i class='bx bx-calendar-event'></i></div>
                         <div class="dash-action-label">Timetable</div>
                         <div class="dash-action-desc">Exam schedule</div>
                     </a>
                     <a href="{{ route('exam.reports') }}"     class="dash-action-card">
-                        <div class="dash-action-icon" style="background:rgba(139,92,246,.1);color:#8b5cf6"><i class='bx bx-bar-chart-alt-2'></i></div>
+                        <div class="dash-action-icon"><i class='bx bx-bar-chart-alt-2'></i></div>
                         <div class="dash-action-label">Reports</div>
                         <div class="dash-action-desc">Program stats</div>
                     </a>

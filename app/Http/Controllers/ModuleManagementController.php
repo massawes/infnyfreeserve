@@ -121,6 +121,7 @@ class ModuleManagementController extends Controller
             ->whereHas('program', function ($query) {
                 $query->where('department_id', $this->hodDepartmentId());
             })
+            ->where('semester', 'Semester 2')
             ->when($request->filled('search'), function ($query) use ($request) {
                 $search = $request->search;
                 $query->where(function ($innerQuery) use ($search) {

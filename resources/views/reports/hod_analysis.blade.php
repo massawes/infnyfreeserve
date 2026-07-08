@@ -61,7 +61,7 @@
                         <a href="{{ route('hod.analysis') }}" class="btn btn-outline-secondary btn-sm rounded-pill">Reset</a>
                     </div>
                 </div>
-                <small class="text-muted d-block mt-2">Chagua week au subject. NTA itajazwa automatically kulingana na subject uliyochagua.</small>
+                <small class="text-muted d-block mt-2">Select a week or subject. NTA will be filled in automatically based on the subject you choose.</small>
             </form>
         </div>
     </div>
@@ -127,7 +127,7 @@
     @else
         <div class="card border-0 shadow-sm rounded-4">
             <div class="card-body p-4 text-center text-muted">
-                Chagua week au subject ili kuona results kutoka database.
+                Select a week or subject to view results from the database.
             </div>
         </div>
     @endif

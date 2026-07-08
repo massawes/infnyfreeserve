@@ -49,7 +49,8 @@ class AttendanceController extends Controller
 
         $subjectsQuery = DB::table('module_distributions as md')
             ->join('modules as m', 'md.module_id', '=', 'm.id')
-            ->where('md.user_id', $lecturer_id);
+            ->where('md.user_id', $lecturer_id)
+            ->where('m.semester', 'Semester 2');
 
         if ($selectedCourse) {
             $subjectsQuery->where('m.program_id', $selectedCourse);
@@ -581,7 +582,11 @@ class AttendanceController extends Controller
     {
         return [
             'students' => Student::with('user')->orderBy('student_name')->get(),
-            'moduleDistributions' => ModuleDistribution::with('module')->get(),
+            'moduleDistributions' => ModuleDistribution::with('module')
+                ->whereHas('module', function ($query) {
+                    $query->where('semester', 'Semester 2');
+                })
+                ->get(),
             'classTimings' => $this->hasAttendanceColumn('class_timing_id')
                 ? ClassTiming::orderBy('day')->orderBy('time')->get()
                 : collect(),

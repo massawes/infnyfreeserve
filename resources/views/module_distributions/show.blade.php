@@ -54,7 +54,7 @@
                         <a href="{{ route('moduledistribute.edit', $distribution->id) }}" class="btn btn-info text-white rounded-3 px-4 shadow-sm">
                             <i class='bx bx-edit-alt me-1'></i> Edit Assignment
                         </a>
-                        <form action="{{ route('moduledistribute.destroy', $distribution->id) }}" method="POST" onsubmit="return confirm('Silencer? Hii itafuta mgao huu kabisa.')">
+                        <form action="{{ route('moduledistribute.destroy', $distribution->id) }}" method="POST" onsubmit="return confirm('Are you sure? This will permanently delete this assignment.')">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger rounded-3 px-4 shadow-sm">

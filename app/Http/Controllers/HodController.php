@@ -26,7 +26,7 @@ class HodController extends Controller
         $lecturersCount = \App\Models\Lecturer::where('department_id', $department_id)->count();
         $modulesCount = Module::whereHas('program', function ($query) use ($department_id) {
             $query->where('department_id', $department_id);
-        })->count();
+        })->where('semester', 'Semester 2')->count();
         $programsCount = Program::where('department_id', $department_id)->count();
         $studentsCount = Student::whereHas('program', function ($query) use ($department_id) {
             $query->where('department_id', $department_id);
@@ -49,6 +49,7 @@ class HodController extends Controller
             ->join('programs as p', 'm.program_id', '=', 'p.id')
             ->join('users as u', 'module_distributions.user_id', '=', 'u.id')
             ->where('p.department_id', $department_id)
+            ->where('m.semester', 'Semester 2')
             ->select(
                 'module_distributions.id',
                 'm.module_name',

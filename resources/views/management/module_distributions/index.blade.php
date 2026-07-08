@@ -1,17 +1,17 @@
 @extends('layouts.app')
-@section('page-title', 'Mgawanyo wa Moduli')
+@section('page-title', 'Module Distribution')
 
 @section('content')
 
 <div class="ent-page-header">
     <div>
-        <h1 class="ent-page-title">Mgawanyo wa Moduli</h1>
-        <p class="ent-page-sub">Rekodi zote za ugawaji wa moduli kwa wahadhiri — za hivi karibuni zinaonekana kwanza</p>
+        <h1 class="ent-page-title">Module Distribution</h1>
+        <p class="ent-page-sub">All module distribution records for lecturers — most recent shown first</p>
     </div>
     <div class="ent-page-actions">
         <a href="{{ route('moduledistribute.create', request()->only('academic_year')) }}"
            class="ent-btn ent-btn-primary ent-btn-sm">
-            <i class='bx bx-plus-circle'></i> Gawa Moduli Mpya
+            <i class='bx bx-plus-circle'></i> Assign New Module
         </a>
     </div>
 </div>
@@ -19,29 +19,29 @@
 {{-- Filter bar --}}
 <div class="ent-card mb-4">
     <div class="ent-card-header">
-        <h2 class="ent-card-title"><i class='bx bx-search-alt'></i> Tafuta Mgawanyo</h2>
+        <h2 class="ent-card-title"><i class='bx bx-search-alt'></i> Search Distribution</h2>
     </div>
     <div class="ent-card-body">
         <form method="GET" action="{{ route('moduledistribute.index') }}">
             <div class="row g-3 align-items-end">
                 <div class="col-sm-6 col-lg-4">
-                    <label class="ent-label">Tafuta</label>
+                    <label class="ent-label">Search</label>
                     <div style="position:relative">
                         <i class='bx bx-search' style="position:absolute;left:.7rem;top:50%;transform:translateY(-50%);color:var(--ent-text-light);pointer-events:none"></i>
                         <input type="text" name="search" class="ent-input" style="padding-left:2rem"
-                            placeholder="Moduli, mhadhiri, mwaka…"
+                            placeholder="Module, lecturer, year…"
                             value="{{ request('search') }}">
                     </div>
                 </div>
                 <div class="col-sm-6 col-lg-4">
-                    <label class="ent-label">Mwaka wa Masomo</label>
+                    <label class="ent-label">Academic Year</label>
                     <input type="text" name="academic_year" class="ent-input"
-                        placeholder="mfano: 2025/2026"
+                        placeholder="e.g. 2025/2026"
                         value="{{ request('academic_year') }}">
                 </div>
                 <div class="col-sm-12 col-lg-4 d-flex gap-2">
                     <button type="submit" class="ent-btn ent-btn-primary w-100">
-                        <i class='bx bx-search-alt'></i> Tafuta
+                        <i class='bx bx-search-alt'></i> Search
                     </button>
                     <a href="{{ route('moduledistribute.index') }}" class="ent-btn ent-btn-outline">
                         <i class='bx bx-reset'></i>
@@ -55,10 +55,10 @@
 {{-- Table --}}
 <div class="ent-card">
     <div class="ent-card-header">
-        <h2 class="ent-card-title"><i class='bx bx-git-branch'></i> Rekodi za Mgawanyo</h2>
+        <h2 class="ent-card-title"><i class='bx bx-git-branch'></i> Distribution Records</h2>
         @if(request('search') || request('academic_year'))
             <span class="ent-badge ent-badge-info">
-                <i class='bx bx-filter-alt'></i> Imechujwa
+                <i class='bx bx-filter-alt'></i> Filtered
             </span>
         @endif
     </div>
@@ -66,7 +66,7 @@
         @if($distributions->isEmpty())
             <div class="ent-empty">
                 <i class='bx bx-git-branch'></i>
-                <p>Hakuna rekodi za mgawanyo zinazolingana na utafutaji wako.</p>
+                <p>No distribution records match your search.</p>
             </div>
         @else
             <div style="overflow-x:auto">
@@ -74,11 +74,11 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Moduli</th>
-                            <th>Programu</th>
-                            <th>Mhadhiri</th>
-                            <th>Mwaka wa Masomo</th>
-                            <th style="text-align:right">Vitendo</th>
+                            <th>Module</th>
+                            <th>Program</th>
+                            <th>Lecturer</th>
+                            <th>Academic Year</th>
+                            <th style="text-align:right">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -119,18 +119,18 @@
                                 <td style="text-align:right">
                                     <div style="display:flex;align-items:center;justify-content:flex-end;gap:.35rem;flex-wrap:nowrap">
                                         <a href="{{ route('moduledistribute.show', $dist->id) }}"
-                                           class="ent-btn ent-btn-outline ent-btn-sm" title="Tazama">
+                                           class="ent-btn ent-btn-outline ent-btn-sm" title="View">
                                             <i class='bx bx-show'></i>
                                         </a>
                                         <a href="{{ route('moduledistribute.edit', $dist->id) }}"
-                                           class="ent-btn ent-btn-outline ent-btn-sm" title="Hariri">
+                                           class="ent-btn ent-btn-outline ent-btn-sm" title="Edit">
                                             <i class='bx bx-edit'></i>
                                         </a>
                                         <form action="{{ route('moduledistribute.destroy', $dist->id) }}" method="POST"
-                                              onsubmit="return confirm('Una uhakika wa kufuta mgawanyo huu?')">
+                                              onsubmit="return confirm('Are you sure you want to delete this distribution?')">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="ent-btn ent-btn-danger ent-btn-sm" title="Futa">
+                                            <button type="submit" class="ent-btn ent-btn-danger ent-btn-sm" title="Delete">
                                                 <i class='bx bx-trash'></i>
                                             </button>
                                         </form>
@@ -140,7 +140,7 @@
                         @empty
                             <tr>
                                 <td colspan="6" style="text-align:center;padding:2.5rem;color:var(--ent-text-muted)">
-                                    Hakuna rekodi zilizopatikana.
+                                    No records found.
                                 </td>
                             </tr>
                         @endforelse

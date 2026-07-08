@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="sw">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -511,9 +511,9 @@
     <footer class="ega-app-footer">
         <span>ATC Student Attendance Management System</span>
         <span class="ega-footer-divider">·</span>
-        <span><i class='bx bx-shield-check'></i> Inafuata viwango vya eGA Tanzania</span>
+        <span><i class='bx bx-shield-check'></i> Compliant with eGA Tanzania standards</span>
         <span class="ega-footer-divider">·</span>
-        <span>&copy; {{ date('Y') }} ATC. Haki zote zimehifadhiwa.</span>
+        <span>&copy; {{ date('Y') }} ATC. All rights reserved.</span>
     </footer>
 </div>
 
@@ -557,10 +557,10 @@
         var icon = btn.querySelector('i');
         if (theme === 'dark') {
             icon.className = 'bx bx-sun';
-            btn.title = 'Badilisha kwenye Mwanga (Light Mode)';
+            btn.title = 'Switch to Light Mode';
         } else {
             icon.className = 'bx bx-moon';
-            btn.title = 'Badilisha kwenye Giza (Dark Mode)';
+            btn.title = 'Switch to Dark Mode';
         }
     }
 

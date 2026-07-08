@@ -156,6 +156,7 @@ class AnalyticsController extends Controller
 
         $modules = DB::table('modules as m')
             ->join('programs as p', 'm.program_id', '=', 'p.id')
+            ->where('m.semester', 'Semester 2')
             ->when($isHod && $selectedDepartmentId, fn ($query) => $query->where('p.department_id', $selectedDepartmentId))
             ->select('m.id', 'm.module_name', 'm.program_id', 'p.department_id')
             ->orderBy('m.module_name')

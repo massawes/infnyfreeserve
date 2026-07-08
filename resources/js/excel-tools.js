@@ -550,7 +550,7 @@ const triggerPrint = (button) => {
     const printableArea = scope.querySelector('.printable-area') || document.querySelector('.printable-area');
 
     if (!printableArea) {
-        showFeedback('Hakuna sehemu ya kuchapisha kwenye page hii.', 'warning');
+        showFeedback('No printable section found on this page.', 'warning');
         return;
     }
 

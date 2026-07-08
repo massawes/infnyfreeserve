@@ -54,7 +54,7 @@
         </div>
     </div>
     <div class="col-sm-4">
-        <div class="dash-stat dash-stat-blue">
+        <div class="dash-stat">
             <div class="dash-stat-icon"><i class='bx bx-book-open'></i></div>
             <div class="dash-stat-value">{{ $totalModules }}</div>
             <div class="dash-stat-label">Enrolled Modules</div>
@@ -62,7 +62,7 @@
         </div>
     </div>
     <div class="col-sm-4">
-        <div class="dash-stat dash-stat-purple">
+        <div class="dash-stat">
             <div class="dash-stat-icon"><i class='bx bx-calendar-check'></i></div>
             <div class="dash-stat-value">{{ $totalRecords }}</div>
             <div class="dash-stat-label">Total Sessions</div>
@@ -79,15 +79,15 @@
     <div class="ent-card-body">
         <div class="dash-action-grid" style="grid-template-columns:repeat(auto-fill,minmax(130px,1fr))">
             <a href="{{ route('studentmodules') }}"  class="dash-action-card">
-                <div class="dash-action-icon" style="background:rgba(59,130,246,.1);color:#3b82f6"><i class='bx bx-book'></i></div>
+                <div class="dash-action-icon"><i class='bx bx-book'></i></div>
                 <div class="dash-action-label">My Modules</div>
             </a>
             <a href="{{ route('studenttimetable') }}" class="dash-action-card">
-                <div class="dash-action-icon" style="background:rgba(16,185,129,.1);color:#10b981"><i class='bx bx-calendar'></i></div>
+                <div class="dash-action-icon"><i class='bx bx-calendar'></i></div>
                 <div class="dash-action-label">Timetable</div>
             </a>
             <a href="{{ route('profile.edit') }}"    class="dash-action-card">
-                <div class="dash-action-icon" style="background:rgba(139,92,246,.1);color:#8b5cf6"><i class='bx bx-user-circle'></i></div>
+                <div class="dash-action-icon"><i class='bx bx-user-circle'></i></div>
                 <div class="dash-action-label">My Profile</div>
             </a>
         </div>

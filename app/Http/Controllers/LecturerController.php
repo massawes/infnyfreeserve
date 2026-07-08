@@ -18,6 +18,9 @@ class LecturerController extends Controller
         $user = auth()->user();
 
         $distributions = ModuleDistribution::where('user_id', $user->id)
+            ->whereHas('module', function ($query) {
+                $query->where('semester', 'Semester 2');
+            })
             ->with('module.program')
             ->get();
 

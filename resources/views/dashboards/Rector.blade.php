@@ -4,7 +4,7 @@
 @section('content')
 
 {{-- Hero --}}
-<div class="dash-hero" style="background:linear-gradient(135deg,#7f1d1d 0%,#b91c1c 45%,#dc2626 70%,#f59e0b 100%)">
+<div class="dash-hero">
     <div class="dash-hero-eyebrow"><i class='bx bx-crown'></i> Office of the Rector</div>
     <h1 class="dash-hero-title">Welcome, {{ auth()->user()->name }}</h1>
     <div class="dash-hero-sub">
@@ -20,7 +20,7 @@
 {{-- Stats --}}
 <div class="row g-3 mb-4">
     <div class="col-sm-4">
-        <div class="dash-stat dash-stat-rose">
+        <div class="dash-stat">
             <div class="dash-stat-icon"><i class='bx bx-graduation'></i></div>
             <div class="dash-stat-value">{{ $totalStudents }}</div>
             <div class="dash-stat-label">Total Students</div>
@@ -28,7 +28,7 @@
         </div>
     </div>
     <div class="col-sm-4">
-        <div class="dash-stat dash-stat-amber">
+        <div class="dash-stat">
             <div class="dash-stat-icon"><i class='bx bx-chalkboard'></i></div>
             <div class="dash-stat-value">{{ $totalLecturers }}</div>
             <div class="dash-stat-label">Lecturers</div>

@@ -17,6 +17,7 @@ class ClassTimingController extends Controller
             ->join('modules as m', 'md.module_id', '=', 'm.id')
 
             ->where('md.user_id', $lecturer_id) // 👈 muhimu sana
+            ->where('m.semester', 'Semester 2')
 
             ->select(
                 'ct.day',

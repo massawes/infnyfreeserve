@@ -28,6 +28,7 @@ class ModuleController extends Controller
             ->leftJoin('users as u', 'md.user_id', '=', 'u.id')
             ->where('m.program_id', $student->program_id)
             ->where('p.department_id', $student->department_id)
+            ->where('m.semester', 'Semester 2')
             ->select(
                 'm.module_code',
                 'm.module_name',

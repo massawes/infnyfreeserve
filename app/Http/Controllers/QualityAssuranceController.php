@@ -11,12 +11,13 @@ class QualityAssuranceController extends Controller
 {
     public function dashboard()
     {
-        $totalModules = Module::count();
+        $totalModules = Module::where('semester', 'Semester 2')->count();
         $totalLecturers = Lecturer::count();
         $totalPrograms = Program::count();
 
         $modulesWithoutTimetables = DB::table('modules as m')
             ->leftJoin('module_distributions as md', 'm.id', '=', 'md.module_id')
+            ->where('m.semester', 'Semester 2')
             ->whereNull('md.id')
             ->count();
 
@@ -24,6 +25,7 @@ class QualityAssuranceController extends Controller
             ->leftJoin('module_distributions as md', 'm.id', '=', 'md.module_id')
             ->leftJoin('programs as p', 'm.program_id', '=', 'p.id')
             ->leftJoin('attendances as a', 'md.id', '=', 'a.module_distribution_id')
+            ->where('m.semester', 'Semester 2')
             ->select(
                 'm.id',
                 'm.module_name',
@@ -42,6 +44,7 @@ class QualityAssuranceController extends Controller
         $modulesWithTimetables = DB::table('modules as m')
             ->join('module_distributions as md', 'm.id', '=', 'md.module_id')
             ->join('class_timings as ct', 'md.id', '=', 'ct.module_distribution_id')
+            ->where('m.semester', 'Semester 2')
             ->distinct()
             ->count('m.id');
 
